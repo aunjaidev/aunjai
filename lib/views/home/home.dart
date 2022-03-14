@@ -21,6 +21,9 @@ class _HomeState extends State<Home> {
     return Scaffold(
         backgroundColor: Colors.transparent,
         body: ListView(
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          physics: const ClampingScrollPhysics(),
           children: [
             Container(
               height: 300,

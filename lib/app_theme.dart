@@ -5,16 +5,19 @@ class AppTheme {
   AppTheme._();
 
   static const Color primaryColor = Color(0xFF4CAD73);
+
   // static const Color notWhite = Color(0xFFEDF0F2);
   static const Color nearlyWhite = Color(0xFFFFFFFF);
   static const Color nearlyGrey = Color(0xFFF4F4F4);
   static const Color nearlyBlack = Color(0xFF213333);
+
   // static const Color grey = Color(0xFFF1F2F3);
   static const Color darkGrey = Color(0xFF313A44);
 
   static const Color darkText = Color(0xFF253840);
   static const Color darkerText = Color(0xFF17262A);
   static const Color lightText = Color(0xFF4A6572);
+
   // static const Color deactivatedText = Color(0xFF767676);
   // static const Color dismissibleBackground = Color(0xFF364A54);
   // static const Color chipBackground = Color(0xFFEEF1F3);
@@ -47,15 +50,17 @@ class AppTheme {
         ),
       );
 
-  static Widget normalText(text, {double? fontSize, Color? color}) =>
+  static Widget normalText(text,
+          {double? fontSize, Color? color, TextAlign? align,FontWeight? fontWeight}) =>
       AutoSizeText(
         text,
         maxFontSize: fontSize ?? 16,
         maxLines: 2,
+        textAlign: align ?? TextAlign.start,
         style: TextStyle(
           // h5 -> headline
           fontFamily: 'Mitr',
-          fontWeight: FontWeight.w100,
+          fontWeight: fontWeight??FontWeight.w100,
           fontSize: fontSize ?? 16,
           height: 1.05,
           letterSpacing: 0.1,
@@ -99,6 +104,24 @@ class AppTheme {
             fontFamily: "Mitr",
             fontSize: 30.0,
             fontWeight: FontWeight.w500),
+      );
+
+  static Widget contentHeader(label, {Color? color}) => AutoSizeText(
+        label,
+        style: TextStyle(
+            color: color ?? AppTheme.nearlyBlack,
+            fontFamily: "Mitr",
+            fontSize: 22.0,
+            fontWeight: FontWeight.w400),
+      );
+
+  static Widget normalContentText(label, {Color? color}) => AutoSizeText(
+        label,
+        style: TextStyle(
+            color: color ?? AppTheme.nearlyBlack,
+            fontFamily: "Mitr",
+            fontSize: 18.0,
+            fontWeight: FontWeight.w100),
       );
 
   static Decoration getDecoration({Color? color, borderRadius}) =>

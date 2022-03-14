@@ -19,59 +19,61 @@ class SlideHorizontalWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: Helper.getScreenWidth(context),
-          margin: const EdgeInsets.symmetric(vertical: AppTheme.layoutPadding),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                'Popular Destinations',
-                style: AppTheme.customeStyle(
-                    fontSize: 21.0,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.black),
-              ),
-              InkWell(
-                onTap: () {},
-                child: Row(
-                  children: [
-                    Text(
-                      "show all",
-                      style: AppTheme.customeStyle(
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.w300,
-                          color: Colors.black),
-                    ),
-                    const Icon(
-                      Icons.arrow_forward_ios,
-                      size: 10.0,
-                    )
-                  ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Container(
+            width: Helper.getScreenWidth(context),
+            margin: const EdgeInsets.symmetric(vertical: AppTheme.layoutPadding),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'Popular Destinations',
+                  style: AppTheme.customeStyle(
+                      fontSize: 21.0,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black),
                 ),
-              )
-            ],
+                InkWell(
+                  onTap: () {},
+                  child: Row(
+                    children: [
+                      Text(
+                        "show all",
+                        style: AppTheme.customeStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.w300,
+                            color: Colors.black),
+                      ),
+                      const Icon(
+                        Icons.arrow_forward_ios,
+                        size: 10.0,
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
-        ),
-        SizedBox(
-          width: Helper.getScreenWidth(context),
-          height: 250,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            children: [
-              _card(context),
-              _card(context),
-              _card(context),
-              _card(context),
-              _card(context),
-              _card(context),
-            ],
+          SizedBox(
+            width: Helper.getScreenWidth(context),
+            height: 250,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: [
+                _card(context),
+                _card(context),
+                _card(context),
+                _card(context),
+                _card(context),
+                _card(context),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -91,7 +93,7 @@ class SlideHorizontalWidget extends StatelessWidget {
           children: [
             SizedBox(
               width: double.infinity,
-              height: 150,
+              height: 130,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
                 child: Image.network(
