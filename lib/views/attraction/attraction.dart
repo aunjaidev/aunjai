@@ -3,13 +3,12 @@ import 'dart:io';
 
 import 'package:aunjai/app_theme.dart';
 import 'package:aunjai/utils/media_size.dart';
-import 'package:aunjai/views/attraction/page/overview.dart';
-import 'package:aunjai/views/attraction/page/photos.dart';
-import 'package:aunjai/views/attraction/page/review.dart';
 import 'package:aunjai/views/widgets/get_rating.dart';
+import 'package:aunjai/views/widgets/horizontal.dart';
 import 'package:aunjai/views/widgets/vertical.dart';
 import 'package:flutter/material.dart';
-import 'package:sticky_headers/sticky_headers.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class AttractionScreen extends StatefulWidget {
   const AttractionScreen({Key? key}) : super(key: key);
@@ -19,116 +18,162 @@ class AttractionScreen extends StatefulWidget {
 }
 
 class _AttractionScreenState extends State<AttractionScreen> {
-  late int _currentSwitchPage = 0;
-  late final ScrollController _scrollController = ScrollController();
-  late int _offsetScollY =0;
+  final List<String> _thumbnailPhoto = [];
+
+  Future<void> getAlbum() async {
+    HttpClient client = HttpClient();
+    client.autoUncompress = true;
+
+    final HttpClientRequest request = await client.getUrl(
+        Uri.parse("https://jsonplaceholder.typicode.com/albums/1/photos"));
+    request.headers
+        .set(HttpHeaders.contentTypeHeader, "application/json; charset=UTF-8");
+    final HttpClientResponse response = await request.close();
+
+    final String content = await response.transform(utf8.decoder).join();
+    final List data = json.decode(content);
+
+    var d = data.sublist(0, 4);
+    for (var element in d) {
+      _thumbnailPhoto.add(element["url"]);
+    }
+    setState(() {});
+  }
+
   @override
   void initState() {
-    _scrollController.addListener(() {
-      setState(()=>_offsetScollY = _scrollController.offset.toInt());
-    });
-
     // final args =
     //     ModalRoute.of(context)!.settings.arguments as Map<String, String>;
-
+    getAlbum();
     super.initState();
+  }
+
+  List<Widget> getPhotos() {
+    List<Widget> widgets = [];
+    for (var url in _thumbnailPhoto) {
+      widgets.add(Container(
+        padding: const EdgeInsets.all(2.50),
+        width: 100,
+        height: 100,
+        child: ClipRRect(
+            borderRadius: BorderRadius.circular(8.0),
+            child: Image.network(
+              url,
+              fit: BoxFit.fitWidth,
+            )),
+      ));
+    }
+
+    return widgets;
   }
 
   @override
   Widget build(BuildContext context) {
-
-    List<Widget> pages = [
-      const AttractionOverview(),
-      const AttractionReview(),
-      const AttractionPhotos(),
-      Column(
-        children: [const Text("Community")],
-      ),
-    ];
-
     return Scaffold(
       body: Container(
         color: Colors.white,
         width: Helper.getScreenWidth(context),
         height: Helper.getScreenHeight(context),
         child: ListView(
-          controller: _scrollController,
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
           physics: const ClampingScrollPhysics(),
           children: [
             headerSection(context),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AppTheme.contentHeader("About"),
+                  AppTheme.normalContentText(
+                      "A nice quaint cafe with a good view of the lower city and mountains. Good to visit even when cloudy or raining because they have a friendly pupper to keep guests company as you."),
+                  const Vertical(10),
+                  getOpenTimeWidget(),
+                  const Vertical(10),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          AppTheme.contentHeader("Photos"),
+                          InkWell(
+                            onTap: () {},
+                            child: AppTheme.normalText("All Photos",
+                                fontSize: 16.0, fontWeight: FontWeight.w400),
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        width: Helper.getScreenWidth(context),
+                        height: 100,
+                        child: Row(children: getPhotos()),
+                      ),
+                      const Vertical(10),
+                      Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              AppTheme.contentHeader("Location"),
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.near_me_sharp,
+                                    size: 18,
+                                  ),
+                                  AppTheme.normalText("12.k",
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w400)
+                                ],
+                              )
+                            ],
+                          ),
+                          Container(
+                              color: Colors.transparent,
+                              height: 200,
+                              width: Helper.getScreenWidth(context),
+                              child: Stack(
+                                children: [
+                                  Positioned(
+                                    child: WebView(
+                                      initialUrl: Uri.dataFromString(
+                                              '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15336.581080757918!2d103.64784909999999!3d16.057949649999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3117fe7454e1758d%3A0x1c7acfbdf4a30f32!2sRoi%20Et%20Golf%20Club!5e0!3m2!1sen!2sth!4v1647272821553!5m2!1sen!2sth" width="1500" height="700" style="style="position:fixed; top:0; left:0; bottom:0; right:0; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;"" allowfullscreen="true" loading="lazy"></iframe>',
+                                              mimeType: 'text/html')
+                                          .toString(),
+                                      javascriptMode:
+                                          JavascriptMode.unrestricted,
+                                    ),
+                                  ),
+                                  Positioned(
+                                      top: 50,
+                                      child: Container(
+                                        height: 50,
+
+                                        width:
+                                            Helper.getScreenWidth(context) / 2,
+                                        child: Center(
+                                            child: AppTheme.normalText(
+                                                "navigate")),
+                                      )),
+                                ],
+                              )),
+                        ],
+                      )
+                    ],
+                  )
+                ],
+              ),
+            ),
             // switchPageWidget(context),
             // pages[_currentSwitchPage]
-            StickyHeader(
-                header: switchPageWidget(context),
-                content: pages[_currentSwitchPage])
+            // StickyHeader(
+            // header: switchPageWidget(context),
+            // content: pages[_currentSwitchPage])
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget switchPageWidget(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          height: _offsetScollY> 306?100:60,
-          padding: EdgeInsets.only(top: _offsetScollY >306 ? 60.0:20.0),
-          width: Helper.getScreenWidth(context),
-          decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(20.0), topLeft: Radius.circular(20.0))),
-          child: Row(
-            children: [
-              buttonSwitchPage(
-                  "Overview",
-                  0,
-                  () => setState(() {
-                        _currentSwitchPage = 0;
-                      })),
-              buttonSwitchPage(
-                  "Review",
-                  1,
-                  () => setState(() {
-                        _currentSwitchPage = 1;
-                      })),
-              buttonSwitchPage(
-                  "Photo",
-                  2,
-                  () => setState(() {
-                        _currentSwitchPage = 2;
-                      })),
-              buttonSwitchPage(
-                  "Community",
-                  3,
-                  () => setState(() {
-                        _currentSwitchPage = 3;
-                      }))
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buttonSwitchPage(label, int page, GestureTapCallback func) {
-    return Flexible(
-      flex: 3,
-      child: InkWell(
-        onTap: func,
-        splashColor: Colors.transparent,
-        hoverColor: Colors.transparent,
-        focusColor: Colors.transparent,
-        highlightColor: Colors.transparent,
-        child: SizedBox(
-          width: Helper.getScreenWidth(context),
-          height: 40,
-          child: AppTheme.normalText(label,
-              fontSize: 20.0,
-              align: TextAlign.center,
-              color: _currentSwitchPage == page ? Colors.black : Colors.grey),
         ),
       ),
     );
@@ -149,17 +194,51 @@ class _AttractionScreenState extends State<AttractionScreen> {
         Positioned(
             top: 70,
             left: 20,
+            right: 20,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                InkWell(
-                  onTap: () => Navigator.pop(context),
-                  child: const Icon(
-                    Icons.arrow_back_ios,
-                    color: Colors.white,
+                SizedBox(
+                  width: Helper.getScreenWidth(context),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      InkWell(
+                        onTap: () => Navigator.pop(context),
+                        child: const Icon(
+                          Icons.arrow_back_ios,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                            width: 35,
+                            height: 35,
+                            child: const Center(
+                                child: Icon(FontAwesomeIcons.shareSquare,
+                                    size: 20)),
+                            decoration: AppTheme.getDecoration(
+                                color: Colors.white, borderRadius: 10.0),
+                          ),
+                          const Horizontal(5),
+                          Container(
+                            width: 35,
+                            height: 35,
+                            child: const Center(
+                                child: Icon(
+                              FontAwesomeIcons.bookmark,
+                              size: 20,
+                            )),
+                            decoration: AppTheme.getDecoration(
+                                color: Colors.white, borderRadius: 10.0),
+                          )
+                        ],
+                      )
+                    ],
                   ),
                 ),
-                const Vertical(50),
+                const Vertical(30),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: AppTheme.titleHeader("Temple Of Dawn (Wat Arun)",
@@ -193,7 +272,17 @@ class _AttractionScreenState extends State<AttractionScreen> {
       ],
     );
   }
-}
 
-// color: Colors.black.withOpacity(0.45),
-//                   colorBlendMode: BlendMode.overlay
+  getOpenTimeWidget() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        AppTheme.contentHeader("OpenTime"),
+        InkWell(
+          child: AppTheme.normalText("Open 08.00-19.00",
+              color: Colors.green, fontSize: 16.0, fontWeight: FontWeight.w400),
+        )
+      ],
+    );
+  }
+}

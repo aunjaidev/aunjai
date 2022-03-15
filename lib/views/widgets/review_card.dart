@@ -1,4 +1,6 @@
 import 'package:aunjai/app_theme.dart';
+import 'package:aunjai/views/widgets/horizontal.dart';
+import 'package:aunjai/views/widgets/vertical.dart';
 import 'package:flutter/material.dart';
 
 class ReviewCard extends StatelessWidget {
@@ -6,28 +8,31 @@ class ReviewCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            const CircleAvatar(
-              radius: 30,
-              backgroundColor: Color(0xffFDCF09),
-              child: CircleAvatar(
-                radius: 30,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              const CircleAvatar(
+                radius: 25,
                 backgroundImage:
-                NetworkImage('https://via.placeholder.com/600/92c952'),
+                    NetworkImage('https://via.placeholder.com/600/92c952'),
               ),
-            ),
-            Column(
-              children: [
-                AppTheme.normalText("Lela Peterson",fontSize: 18.0),
-                AppTheme.normalText("Posted 3 hours ago")
-              ],
-            )
-          ],
-        )
-      ],
+              const Horizontal(10.0),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AppTheme.normalText("Lela Peterson",
+                      fontSize: 18.0, fontWeight: FontWeight.w500),
+                  const Vertical(2.5),
+                  AppTheme.normalText("Posted 3 hours ago", fontSize: 12.0)
+                ],
+              )
+            ],
+          )
+        ],
+      ),
     );
   }
 }
