@@ -18,14 +18,7 @@ class GetRatingStarWidget extends StatelessWidget {
       children: [
         Row(children: _getStar()),
         const Horizontal(5.0),
-        Container(
-          width: 20,
-          height: 20,
-          decoration: AppTheme.getDecoration(
-              borderRadius: 5.0, color: AppTheme.primaryColor),
-          child: Center(
-              child: AppTheme.normalText(rating.toString(), color: color)),
-        )
+        AppTheme.normalText("from 1,000 review", color: color)
       ],
     );
   }
@@ -49,30 +42,16 @@ class GetRatingStarWidget extends StatelessWidget {
         size: size ?? 15,
       ));
     }
+
+    count = rating.toInt() - count + 1;
+    for (int i = 0; i < count; i++) {
+      star.add(Icon(
+        Icons.star_border,
+        color: color ?? AppTheme.primaryColor,
+        size: size ?? 15,
+      ));
+    }
     return star;
   }
-}
 
-Widget getRating(String rating) {
-  return Container(
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        const Icon(
-          Icons.star,
-          color: AppTheme.nearlyWhite,
-          size: 12,
-        ),
-        Text(
-          rating,
-          style: AppTheme.customeStyle(
-              fontSize: 12.0, color: AppTheme.nearlyWhite),
-        )
-      ],
-    ),
-    width: 40,
-    decoration: AppTheme.getDecoration(
-        borderRadius: 10.0, color: AppTheme.primaryColor),
-  );
 }

@@ -62,7 +62,7 @@ class AppTheme {
           fontFamily: 'Mitr',
           fontWeight: fontWeight??FontWeight.w100,
           fontSize: fontSize ?? 16,
-          height: 1.05,
+          height: 1.25,
           letterSpacing: 0.1,
           color: color ?? darkerText,
         ),
@@ -97,13 +97,13 @@ class AppTheme {
       fontSize: fontSize ?? 14.0,
       fontWeight: FontWeight.w400);
 
-  static Widget titleHeader(label, {Color? color}) => AutoSizeText(
+  static Widget titleAppbar(label, {Color? color}) => AutoSizeText(
         label,
         style: TextStyle(
             color: color ?? AppTheme.nearlyBlack,
             fontFamily: "Mitr",
-            fontSize: 30.0,
-            fontWeight: FontWeight.w500),
+            fontSize: 28.0,
+            fontWeight: FontWeight.w400),
       );
 
   static Widget contentHeader(label, {Color? color}) => AutoSizeText(
