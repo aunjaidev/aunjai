@@ -1,7 +1,8 @@
 import 'package:aunjai/views/attraction/widget/opentime_widget.dart';
 import 'package:aunjai/views/widgets/rating_widget.dart';
-import 'package:aunjai/views/widgets/review_card.dart';
+import 'package:aunjai/views/widgets/reviews_widget.dart';
 import 'package:aunjai/views/widgets/slide_horizontal_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:aunjai/app_theme.dart';
 import 'package:aunjai/utils/media_size.dart';
@@ -9,10 +10,8 @@ import 'package:aunjai/views/widgets/get_rating.dart';
 import 'package:aunjai/views/widgets/horizontal.dart';
 import 'package:aunjai/views/widgets/vertical.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 class AttractionScreen extends StatefulWidget {
   const AttractionScreen({Key? key}) : super(key: key);
@@ -22,6 +21,11 @@ class AttractionScreen extends StatefulWidget {
 }
 
 class _AttractionScreenState extends State<AttractionScreen> {
+
+  late PhotoViewController photoViewController;
+  late PageController pageController;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   final List<String> _thumbnailPhoto = [
     "https://cdn.pixabay.com/photo/2017/12/03/18/04/christmas-balls-2995437_960_720.jpg",
     "https://cdn.pixabay.com/photo/2017/12/13/00/23/christmas-3015776_960_720.jpg",
@@ -92,18 +96,25 @@ class _AttractionScreenState extends State<AttractionScreen> {
     // final args =
     //     ModalRoute.of(context)!.settings.arguments as Map<String, String>;
     // getAlbum();
+
     super.initState();
+    photoViewController = PhotoViewController();
+    pageController = PageController();
+
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    pageController.dispose();
     super.dispose();
+
+
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: GFAppBar(
         titleSpacing: -15.0,
         backgroundColor: AppTheme.primaryColor,
@@ -152,6 +163,7 @@ class _AttractionScreenState extends State<AttractionScreen> {
                     width: Helper.getScreenWidth(context),
                     height: 280,
                     child: PhotoViewGallery.builder(
+                      pageController: pageController,
                       onPageChanged: (p) => setState(() {
                         _currentImage = p + 1;
                       }),
@@ -159,6 +171,7 @@ class _AttractionScreenState extends State<AttractionScreen> {
                       itemCount: _thumbnailPhoto.length,
                       builder: (ctx, index) {
                         return PhotoViewGalleryPageOptions.customChild(
+                          controller: photoViewController,
                           child: InkWell(
                             onTap: () {},
                             child: Stack(
@@ -371,7 +384,7 @@ class _AttractionScreenState extends State<AttractionScreen> {
                           ),
                         ],
                       ),
-                      const Vertical(15.0),
+                      const Vertical(30.0),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -379,6 +392,7 @@ class _AttractionScreenState extends State<AttractionScreen> {
                           Container(
                             height: 50,
                             width: Helper.getScreenWidth(context),
+    margin: EdgeInsets.only(top: 5.0),
                             child: ListView(
                               scrollDirection: Axis.horizontal,
                               children: getMentionWidgets(),
@@ -386,7 +400,7 @@ class _AttractionScreenState extends State<AttractionScreen> {
                           )
                         ],
                       ),
-                      ReviewCard()
+                      ReviewsWidget()
                     ],
                   ),
                 ],
@@ -422,12 +436,12 @@ class _AttractionScreenState extends State<AttractionScreen> {
       widgets.add(Container(
         margin: EdgeInsets.all(5.0),
         height: 35,
-        padding: EdgeInsets.symmetric(vertical: 2.5, horizontal: 5),
+        padding: EdgeInsets.symmetric(vertical: 2.5, horizontal: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(100),
           color: Colors.white,
           boxShadow: [
-            BoxShadow(color: Colors.grey, spreadRadius: 1),
+            BoxShadow(color: Colors.grey, spreadRadius: 1.5),
           ],
         ),
         child: Center(
