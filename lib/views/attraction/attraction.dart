@@ -31,6 +31,24 @@ class _AttractionScreenState extends State<AttractionScreen> {
     "https://cdn.pixabay.com/photo/2016/11/22/07/09/spruce-1848543__340.jpg"
   ];
 
+  final List<String> mentions = [
+    "reclining buddha"
+        "grand palace",
+    "massage school",
+    "entrance fee",
+    "worth a visit",
+    "thai massage",
+    "temple",
+    "pearl",
+    "complex",
+    "coins",
+    "shoes",
+    "wat",
+    "baht",
+    "architecture",
+    "culture",
+    "clothes"
+  ];
   late int _currentImage = 1;
 
   // Future<void> getAlbum() async {
@@ -316,7 +334,7 @@ class _AttractionScreenState extends State<AttractionScreen> {
                               Expanded(
                                 child: SizedBox(
                                   width: Helper.getScreenWidth(context),
-                                  height: 80,
+                                  height: 100,
                                   child: Row(
                                     children: [
                                       Column(
@@ -353,8 +371,21 @@ class _AttractionScreenState extends State<AttractionScreen> {
                           ),
                         ],
                       ),
-                      const Vertical(10.0),
-
+                      const Vertical(15.0),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          AppTheme.contentHeader("Popular mentions"),
+                          Container(
+                            height: 50,
+                            width: Helper.getScreenWidth(context),
+                            child: ListView(
+                              scrollDirection: Axis.horizontal,
+                              children: getMentionWidgets(),
+                            ),
+                          )
+                        ],
+                      ),
                       ReviewCard()
                     ],
                   ),
@@ -383,5 +414,29 @@ class _AttractionScreenState extends State<AttractionScreen> {
         Flexible(flex: 2, child: AppTheme.normalText("95"))
       ],
     );
+  }
+
+  List<Widget> getMentionWidgets() {
+    List<Widget> widgets = [];
+    for (var label in mentions) {
+      widgets.add(Container(
+        margin: EdgeInsets.all(5.0),
+        height: 35,
+        padding: EdgeInsets.symmetric(vertical: 2.5, horizontal: 5),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(100),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(color: Colors.grey, spreadRadius: 1),
+          ],
+        ),
+        child: Center(
+          child: InkWell(
+            child: AppTheme.normalText(label),
+          ),
+        ),
+      ));
+    }
+    return widgets;
   }
 }
