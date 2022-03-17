@@ -17,8 +17,6 @@ class GetRatingStarWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Row(children: _getStar()),
-        const Horizontal(5.0),
-        AppTheme.normalText("from 1,000 review", color: color)
       ],
     );
   }

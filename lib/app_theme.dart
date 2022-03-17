@@ -2,6 +2,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class AppTheme {
+
+
   AppTheme._();
 
   static const Color primaryColor = Color(0xFF4CAD73);
@@ -23,6 +25,19 @@ class AppTheme {
   // static const Color chipBackground = Color(0xFFEEF1F3);
   // static const Color spacer = Color(0xFFF2F2F2);
   static const double layoutPadding = 20.0;
+
+  static Widget buttonTextWidget(text) => AutoSizeText(
+    text,
+    style: const TextStyle(
+      // h5 -> headline
+      fontFamily: 'Mitr',
+      fontWeight: FontWeight.w500,
+      fontSize: 18,
+      height: 1.25,
+      letterSpacing: 0.1,
+      color: Colors.white,
+    ),
+  );
 
   static Widget textActivitiesTitle(text) => AutoSizeText(
         text,

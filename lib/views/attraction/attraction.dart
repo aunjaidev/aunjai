@@ -1,4 +1,7 @@
 import 'package:aunjai/views/attraction/widget/opentime_widget.dart';
+import 'package:aunjai/views/widgets/rating_widget.dart';
+import 'package:aunjai/views/widgets/review_card.dart';
+import 'package:aunjai/views/widgets/slide_horizontal_widget.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:aunjai/app_theme.dart';
 import 'package:aunjai/utils/media_size.dart';
@@ -72,6 +75,12 @@ class _AttractionScreenState extends State<AttractionScreen> {
     //     ModalRoute.of(context)!.settings.arguments as Map<String, String>;
     // getAlbum();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
   }
 
   @override
@@ -222,22 +231,131 @@ class _AttractionScreenState extends State<AttractionScreen> {
                       const Vertical(2.5),
                       const OpenTimeWidget(),
                       const Vertical(2.5),
-                      Container(
-                        width: Helper.getScreenWidth(context),
-                        height: 500,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            AppTheme.contentHeader("Location"),
-                            AppTheme.normalText('2 Sanamchai Road Grand Palace Subdistrict, Pranakorn District, Bangkok 10200')
-                          ],
-                        ),
-                      ),
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          AppTheme.contentHeader("Reviews")
+                          AppTheme.contentHeader("Location"),
+                          AppTheme.normalText(
+                              '2 Sanamchai Road Grand Palace Subdistrict, Pranakorn District, Bangkok 10200'),
+                          Container(
+                            margin: EdgeInsets.symmetric(vertical: 10.0),
+                            decoration: AppTheme.getDecoration(
+                                color: Colors.cyan, borderRadius: 10.0),
+                            width: Helper.getScreenWidth(context),
+                            height: 250,
+                            child: Stack(
+                              children: [
+                                Positioned.fill(
+                                    child: Align(
+                                  alignment: Alignment.center,
+                                  child: Container(
+                                    width: 100,
+                                    height: 50,
+                                    decoration: AppTheme.getDecoration(
+                                        color: Colors.black.withOpacity(0.2),
+                                        borderRadius: 5.0),
+                                    child: Center(
+                                      child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: const [
+                                            Icon(Icons.fullscreen),
+                                            Text("ดูแผนที่")
+                                          ]),
+                                    ),
+                                  ),
+                                ))
+                              ],
+                            ),
+                          ),
+                          const SlideHorizontalWidget()
                         ],
-                      )
+                      ),
+                      const Vertical(5),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              AppTheme.contentHeader("Reviews"),
+                              GFButton(
+                                child:
+                                    AppTheme.buttonTextWidget("Write Review"),
+                                onPressed: () {},
+                                shape: GFButtonShape.pills,
+                                size: 30.0,
+                              ),
+                            ],
+                          ),
+                          Vertical(5.0),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Column(
+                                children: [
+                                  Text(
+                                    "3.5",
+                                    style: TextStyle(fontSize: 50.0),
+                                  ),
+                                  Vertical(5.0),
+                                  Rating(
+                                    rating: 3.5,
+                                  ),
+                                  Vertical(5.0),
+                                  Text(
+                                    "from 1000 reviews",
+                                    style: TextStyle(fontSize: 14.0),
+                                  ),
+                                ],
+                              ),
+                              const Horizontal(15),
+                              Expanded(
+                                child: SizedBox(
+                                  width: Helper.getScreenWidth(context),
+                                  height: 80,
+                                  child: Row(
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          AppTheme.normalText("Excellent"),
+                                          AppTheme.normalText("VeryGood"),
+                                          AppTheme.normalText("Average"),
+                                          AppTheme.normalText("Poor"),
+                                          AppTheme.normalText("Terrible"),
+                                        ],
+                                      ),
+                                      Expanded(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: [
+                                            getRatingProgressBar(0.1),
+                                            getRatingProgressBar(0.5),
+                                            getRatingProgressBar(0.2),
+                                            getRatingProgressBar(0.9),
+                                            getRatingProgressBar(1.0),
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                      const Vertical(10.0),
+
+                      ReviewCard()
                     ],
                   ),
                 ],
@@ -246,6 +364,24 @@ class _AttractionScreenState extends State<AttractionScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  getRatingProgressBar(percentage) {
+    return Row(
+      children: [
+        Flexible(
+          child: GFProgressBar(
+            percentage: percentage,
+            lineHeight: 5,
+            alignment: MainAxisAlignment.spaceBetween,
+            backgroundColor: Colors.black26,
+            progressBarColor: GFColors.INFO,
+          ),
+          flex: 10,
+        ),
+        Flexible(flex: 2, child: AppTheme.normalText("95"))
+      ],
     );
   }
 }

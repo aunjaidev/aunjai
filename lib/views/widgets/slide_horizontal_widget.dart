@@ -24,7 +24,7 @@ class SlideHorizontalWidget extends StatelessWidget {
         children: [
           Container(
             width: Helper.getScreenWidth(context),
-            margin: const EdgeInsets.symmetric(vertical: AppTheme.layoutPadding),
+            margin: const EdgeInsets.only(top: AppTheme.layoutPadding,bottom: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -59,7 +59,7 @@ class SlideHorizontalWidget extends StatelessWidget {
           ),
           SizedBox(
             width: Helper.getScreenWidth(context),
-            height: 250,
+            height: 200,
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
@@ -87,7 +87,7 @@ class SlideHorizontalWidget extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.only(right: 7.5),
         width: 200,
-        height: 200.0,
+        height: 150.0,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
