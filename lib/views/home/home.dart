@@ -1,10 +1,10 @@
+import 'package:aunjai/utils/widgets/widgets.common.dart';
 import 'package:flutter/material.dart';
 import 'package:aunjai/app_theme.dart';
-import 'package:aunjai/utils/media_size.dart';
+import 'package:aunjai/utils/helper.dart';
 import 'package:aunjai/views/home/widget/carouse_slide_widget.dart';
 import 'package:aunjai/views/home/widget/home_headbar.dart';
 import 'package:aunjai/views/home/widget/main_menu_widget.dart';
-import 'package:aunjai/views/widgets/slide_horizontal_widget.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -28,7 +28,7 @@ class _HomeState extends State<Home> {
             Container(
               height: 300,
               width: Helper.getScreenWidth(context),
-              margin: const EdgeInsets.only(bottom: AppTheme.layoutPadding),
+              margin: const EdgeInsets.only(bottom: Helper.layoutPadding),
               child: Stack(
                 children: const [
                   Positioned(
@@ -41,8 +41,8 @@ class _HomeState extends State<Home> {
             const CarouseSlideWidget(),
             Padding(
               padding: const EdgeInsets.symmetric(
-                  horizontal: AppTheme.layoutPadding),
-              child: Column(children: [const SlideHorizontalWidget()]),
+                  horizontal: Helper.layoutPadding),
+              child: Column(children: const [ MediaCarouselHorizontalWidget()]),
             )
           ],
         ));

@@ -1,7 +1,8 @@
-import 'package:aunjai/views/widgets/common.dart';
+import 'package:aunjai/utils/text.common.dart';
+import 'package:aunjai/utils/widgets/widgets.common.dart';
 import 'package:flutter/material.dart';
 import 'package:aunjai/app_theme.dart';
-import 'package:aunjai/utils/media_size.dart';
+import 'package:aunjai/utils/helper.dart';
 
 class MainMenuWidget extends StatelessWidget {
   const MainMenuWidget({Key? key}) : super(key: key);
@@ -10,7 +11,7 @@ class MainMenuWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 200,
-      padding: const EdgeInsets.symmetric(horizontal: AppTheme.layoutPadding),
+      padding: const EdgeInsets.symmetric(horizontal: Helper.layoutPadding),
       width: Helper.getScreenWidth(context),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -18,14 +19,14 @@ class MainMenuWidget extends StatelessWidget {
           Row(
             children: [
               _buildBtn(context),
-              WidgetCommon.horizontal(5.0),
+              WidgetsCommon.horizontal(5.0),
               _buildBtn(context),
             ],
           ),
           Row(
             children: [
               _buildBtn(context),
-              WidgetCommon.horizontal(5.0),
+              WidgetsCommon.horizontal(5.0),
               _buildBtn(context),
             ],
           ),
@@ -63,7 +64,7 @@ class MainMenuWidget extends StatelessWidget {
                     Text(
                       'asdddddd',
                       textAlign: TextAlign.left,
-                      style: AppTheme.subtitle,
+                      style: TextCommon.subtitle,
                     ),
                   ]),
             ],

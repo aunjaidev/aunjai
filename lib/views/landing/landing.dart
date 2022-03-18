@@ -1,7 +1,7 @@
+import 'package:aunjai/utils/text.common.dart';
 import 'package:flutter/material.dart';
-import 'package:aunjai/app_theme.dart';
 import 'package:aunjai/routes.dart';
-import 'package:aunjai/utils/media_size.dart';
+import 'package:aunjai/utils/helper.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({Key? key}) : super(key: key);
@@ -31,7 +31,7 @@ class _LandingPageState extends State<LandingPage> {
         child: Text(
           "TripGuy",
           style:
-              AppTheme.customeStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              TextCommon.customeStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
       ),
     ));

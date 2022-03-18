@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:aunjai/utils/media_size.dart';
+import 'package:aunjai/utils/helper.dart';
 import 'package:flutter/material.dart';
 
 class AttractionPhotos extends StatefulWidget {

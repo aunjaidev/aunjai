@@ -1,7 +1,7 @@
  import 'package:flutter/material.dart';
 import 'package:aunjai/app_theme.dart';
 import 'package:aunjai/mock/carousel_model.dart';
-import 'package:aunjai/utils/media_size.dart';
+import 'package:aunjai/utils/helper.dart';
 
 class CarouseSlideWidget extends StatefulWidget {
   const CarouseSlideWidget({Key? key}) : super(key: key);

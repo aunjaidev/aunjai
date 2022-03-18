@@ -1,25 +1,62 @@
 import 'package:aunjai/app_theme.dart';
 import 'package:aunjai/init.dart';
-import 'package:aunjai/utils/media_size.dart';
+import 'package:aunjai/routes.dart';
+import 'package:aunjai/utils/helper.dart';
+import 'package:aunjai/utils/text.common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 
-class WidgetCommon {
-  WidgetCommon._();
+class WidgetsCommon {
+  WidgetsCommon._();
 
-  static Widget horizontal (double size) => _Horizontal(size);
-  static Widget vertical (double size) => _Vertical(size);
+  static Widget horizontal(double size) => _Horizontal(size);
 
-  static Widget notificationBadge ()=> const _NotificationBadge();
+  static Widget vertical(double size) => _Vertical(size);
+
+  static Widget notificationBadge() => const _NotificationBadge();
 
   static Widget expandableText(
           {required String text, required int trimLines}) =>
       _ExpandableText(text, trimLines: trimLines);
 
-  static AppBar appBar({List<Widget>? actions}) {
+  static Widget rating({double? size, required double score}) {
+    List<Widget> widgets = [];
+    for (int i = 0; i < score.toInt(); i++) {
+      widgets.add(Icon(
+        Icons.star,
+        size: size ?? 18.0,
+        color: AppTheme.primaryColor,
+      ));
+    }
+
+    if (score.toInt() != score) {
+      widgets.add(Icon(
+        Icons.star_half,
+        size: size ?? 18.0,
+        color: AppTheme.primaryColor,
+      ));
+    }
+
+    for (int i = 0; i < 5 - widgets.length; i++) {
+      widgets.add(Icon(
+        Icons.star_border,
+        size: size ?? 18.0,
+        color: AppTheme.primaryColor,
+      ));
+    }
+    return Row(
+      children: widgets,
+    );
+  }
+
+  static AppBar appBar(context,{String? title,List<Widget>? actions}) {
     return AppBar(
       backgroundColor: AppTheme.primaryColor,
-      title: AppTheme.titleAppbar("Photos"),
+      title: title != null?Text(title,style: const TextStyle(
+          color: AppTheme.nearlyBlack,
+          fontFamily: "Mitr",
+          fontSize: 28.0,
+          fontWeight: FontWeight.w400),):const SizedBox(),
       actions: actions ?? [],
       leading: IconButton(
         hoverColor: Colors.transparent,
@@ -29,7 +66,7 @@ class WidgetCommon {
           Icons.arrow_back_ios,
           color: Colors.white,
         ),
-        onPressed: () {},
+        onPressed: () => Navigator.pop(context),
       ),
     );
   }
@@ -49,7 +86,7 @@ class WidgetCommon {
             child: Center(
                 child: Text(
               label,
-              style: AppTheme.customeStyle(fontSize: 18.0),
+              style: TextCommon.customeStyle(fontSize: 18.0),
             ))),
       ),
     );
@@ -123,6 +160,21 @@ class WidgetCommon {
     );
   }
 
+  static Decoration decoration({Color? color, borderRadius}) =>
+      BoxDecoration(
+          color: color ?? AppTheme.primaryColor,
+          borderRadius: BorderRadius.circular(borderRadius ?? 15),
+          border: Border.all(
+            color: Colors.transparent,
+          ),
+          boxShadow: const [
+            BoxShadow(
+              offset: Offset(1, 1),
+              blurRadius: 2.5,
+              color: Colors.grey,
+              spreadRadius: -2,
+            )
+          ]);
 }
 
 class _Horizontal extends StatelessWidget {
@@ -137,14 +189,17 @@ class _Horizontal extends StatelessWidget {
     );
   }
 }
+
 class _Vertical extends StatelessWidget {
-  const _Vertical(this.size,{Key? key}) : super(key: key);
+  const _Vertical(this.size, {Key? key}) : super(key: key);
 
   final double size;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(height: size,);
+    return SizedBox(
+      height: size,
+    );
   }
 }
 
@@ -211,13 +266,13 @@ class ExpandableTextState extends State<_ExpandableText> {
         if (textPainter.didExceedMaxLines) {
           textSpan = TextSpan(
             text: _readMore ? widget.text.substring(0, endIndex) : widget.text,
-            style: AppTheme.customeStyle(
+            style: TextCommon.customeStyle(
                 fontSize: 16.0, fontWeight: FontWeight.w200, height: 1.35),
             children: <TextSpan>[link],
           );
         } else {
           textSpan = TextSpan(
-            style: AppTheme.customeStyle(
+            style: TextCommon.customeStyle(
               fontSize: 16.0,
             ),
             text: widget.text,
@@ -259,30 +314,156 @@ class _NotificationBadge extends StatelessWidget {
             onPressed: onTap),
         notificationCount != 0
             ? Positioned(
-          right: 5,
-          top: 11,
-          child: Container(
-            padding: const EdgeInsets.all(2),
-            decoration: BoxDecoration(
-              color: Colors.red,
-              borderRadius: BorderRadius.circular(18),
-            ),
-            constraints: const BoxConstraints(
-              minWidth: 18,
-              minHeight: 18,
-            ),
-            child: Text(
-              '$notificationCount',
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 12,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-        )
+                right: 5,
+                top: 11,
+                child: Container(
+                  padding: const EdgeInsets.all(2),
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(18),
+                  ),
+                  constraints: const BoxConstraints(
+                    minWidth: 18,
+                    minHeight: 18,
+                  ),
+                  child: Text(
+                    '$notificationCount',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              )
             : Container()
       ]),
+    );
+  }
+}
+
+
+class MediaCarouselHorizontalWidget extends StatelessWidget {
+  const MediaCarouselHorizontalWidget({Key? key}) : super(key: key);
+
+  Map<String, dynamic> getPlaceMock() => {
+    "id": "p001",
+    "title": "Temple Of Dawn (Wat Arun)",
+    "coverImage":
+    "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/17/ee/e6/a5/wat-arun-is-an-ancient.jpg?w=900&h=-1&s=1",
+    "type": "Points of Interest & Landmarks • Religious Sites",
+    "distance": 25,
+    "rating": 2.5
+  };
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Container(
+            width: Helper.getScreenWidth(context),
+            margin:
+            const EdgeInsets.only(top: Helper.layoutPadding, bottom: 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'Popular Destinations',
+                  style: TextCommon.customeStyle(
+                      fontSize: 21.0,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black),
+                ),
+                InkWell(
+                  onTap: () {},
+                  child: Row(
+                    children: [
+                      Text(
+                        "show all",
+                        style: TextCommon.customeStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.w300,
+                            color: Colors.black),
+                      ),
+                      const Icon(
+                        Icons.arrow_forward_ios,
+                        size: 10.0,
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+          SizedBox(
+            width: Helper.getScreenWidth(context),
+            height: 260,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: [
+                _card(context),
+                _card(context),
+                _card(context),
+                _card(context),
+                _card(context),
+                _card(context),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _card(context) {
+    return InkWell(
+      onTap: () {
+        Map<String, String> args = {"id": "p001", "type": "attraction"};
+        handleNavigationRoute(
+            context: context, routeName: "/AttractionScreen", arguments: args);
+      },
+      child: Container(
+        margin: const EdgeInsets.only(right: 7.5),
+        width: 200,
+        height: 150,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: double.infinity,
+              height: 130,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child: Image.network(
+                  getPlaceMock()["coverImage"],
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 5.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 1.5),
+                    child:
+                    TextCommon.textActivitiesTitle(getPlaceMock()["title"]),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 1.5),
+                    child:
+                    TextCommon.textActivitiesContent(getPlaceMock()["type"]),
+                  ),
+                  WidgetsCommon.rating(score: getPlaceMock()["rating"]),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }

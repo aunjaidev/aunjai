@@ -1,9 +1,8 @@
 import 'dart:math';
 
-import 'package:aunjai/app_theme.dart';
-import 'package:aunjai/utils/media_size.dart';
-import 'package:aunjai/views/widgets/common.dart';
-import 'package:aunjai/views/widgets/rating_widget.dart';
+import 'package:aunjai/utils/helper.dart';
+import 'package:aunjai/utils/text.common.dart';
+import 'package:aunjai/utils/widgets/widgets.common.dart';
 import 'package:flutter/material.dart';
 
 class ReviewPost extends StatefulWidget {
@@ -66,31 +65,31 @@ class _ReviewPostState extends State<ReviewPost> {
                     radius: 25,
                     backgroundImage: NetworkImage(avatar),
                   ),
-                  WidgetCommon.horizontal(10.0),
+                  WidgetsCommon.horizontal(10.0),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      AppTheme.normalText(name,
+                      TextCommon.normalText(name,
                           fontSize: 18.0, fontWeight: FontWeight.w500),
-                      Rating(rating: rating),
+                      WidgetsCommon.rating(score: rating),
                     ],
                   )
                 ],
               ),
-              InkWell(
+              const InkWell(
                 child: Icon(
                   Icons.more_vert,
                 ),
               ),
             ],
           ),
-          WidgetCommon.vertical(5),
+          WidgetsCommon.vertical(5),
           Text(
             keyMention,
-            style: AppTheme.customeStyle(
+            style: TextCommon.customeStyle(
                 fontSize: 20.0, fontWeight: FontWeight.w400, height: 1.35),
           ),
-          WidgetCommon.expandableText(text: content, trimLines: 3),
+          WidgetsCommon.expandableText(text: content, trimLines: 3),
           SizedBox(
             width: Helper.getScreenWidth(context),
             height: 105,
@@ -98,7 +97,7 @@ class _ReviewPostState extends State<ReviewPost> {
               children: getReviewPhoto(),
             ),
           ),
-          AppTheme.normalText(writeTime)
+          TextCommon.normalText(writeTime)
         ],
       ),
     );
@@ -113,7 +112,7 @@ class _ReviewPostState extends State<ReviewPost> {
           width: 90,
           height: 90,
           child: Center(
-            child: AppTheme.normalText("+${10 - i}", fontSize: 20.0),
+            child: TextCommon.normalText("+${10 - i}", fontSize: 20.0),
           ),
           color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
         ));

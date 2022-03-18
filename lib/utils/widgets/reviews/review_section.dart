@@ -1,9 +1,9 @@
-import 'package:aunjai/app_theme.dart';
+
 import 'package:aunjai/mock/review_mock.dart';
-import 'package:aunjai/utils/media_size.dart';
+import 'package:aunjai/utils/helper.dart';
+import 'package:aunjai/utils/widgets/reviews/post.dart';
+import 'package:aunjai/utils/widgets/widgets.common.dart';
 import 'package:aunjai/views/attraction/page/review_page/review.dart';
-import 'package:aunjai/views/widgets/common.dart';
-import 'package:aunjai/views/widgets/reviews/post.dart';
 import 'package:flutter/material.dart';
 
 class ReviewSection extends StatefulWidget {
@@ -20,7 +20,7 @@ class _ReviewSectionState extends State<ReviewSection> {
     for (var post in reviewMock) {
       if (_count == 4) {
         widgets.add(
-          WidgetCommon.button(context, label:  "ดูรีวิวเพิ่มเติม (${reviewMock.length - widgets.length})",onTap: ()=>Navigator.push(
+          WidgetsCommon.button(context, label:  "ดูรีวิวเพิ่มเติม (${reviewMock.length - widgets.length})",onTap: ()=>Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => ReviewPage(posts: reviewMock)))),
