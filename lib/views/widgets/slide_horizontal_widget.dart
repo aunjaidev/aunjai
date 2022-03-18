@@ -1,8 +1,8 @@
 import 'package:aunjai/routes.dart';
+import 'package:aunjai/views/widgets/rating_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:aunjai/app_theme.dart';
 import 'package:aunjai/utils/media_size.dart';
-import 'package:aunjai/views/widgets/get_rating.dart';
 
 class SlideHorizontalWidget extends StatelessWidget {
   const SlideHorizontalWidget({Key? key}) : super(key: key);
@@ -25,7 +25,7 @@ class SlideHorizontalWidget extends StatelessWidget {
           Container(
             width: Helper.getScreenWidth(context),
             margin:
-                const EdgeInsets.only(top: AppTheme.layoutPadding, bottom: 10),
+                const EdgeInsets.only(top: AppTheme.layoutPadding, bottom: 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -118,7 +118,7 @@ class SlideHorizontalWidget extends StatelessWidget {
                     child:
                         AppTheme.textActivitiesContent(getPlaceMock()["type"]),
                   ),
-                  GetRatingStarWidget(rating: getPlaceMock()["rating"]),
+                  Rating(rating: getPlaceMock()["rating"]),
                 ],
               ),
             )

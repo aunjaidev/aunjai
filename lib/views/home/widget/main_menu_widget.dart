@@ -1,7 +1,7 @@
+import 'package:aunjai/views/widgets/common.dart';
 import 'package:flutter/material.dart';
 import 'package:aunjai/app_theme.dart';
 import 'package:aunjai/utils/media_size.dart';
-import 'package:aunjai/views/widgets/horizontal.dart';
 
 class MainMenuWidget extends StatelessWidget {
   const MainMenuWidget({Key? key}) : super(key: key);
@@ -10,8 +10,7 @@ class MainMenuWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 200,
-      padding: const EdgeInsets.symmetric(
-          horizontal: AppTheme.layoutPadding),
+      padding: const EdgeInsets.symmetric(horizontal: AppTheme.layoutPadding),
       width: Helper.getScreenWidth(context),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -19,14 +18,14 @@ class MainMenuWidget extends StatelessWidget {
           Row(
             children: [
               _buildBtn(context),
-              const Horizontal(5.0),
+              WidgetCommon.horizontal(5.0),
               _buildBtn(context),
             ],
           ),
           Row(
             children: [
               _buildBtn(context),
-              const Horizontal(5.0),
+              WidgetCommon.horizontal(5.0),
               _buildBtn(context),
             ],
           ),
@@ -41,7 +40,7 @@ class MainMenuWidget extends StatelessWidget {
       child: Container(
           width: Helper.getScreenWidth(context),
           height: 70,
-          margin: const EdgeInsets.symmetric( vertical: 5.0),
+          margin: const EdgeInsets.symmetric(vertical: 5.0),
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(10)),
             color: Color.fromRGBO(75, 173, 115, 0.20000000298023224),
@@ -71,6 +70,4 @@ class MainMenuWidget extends StatelessWidget {
           )),
     );
   }
-
-
 }

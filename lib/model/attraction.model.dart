@@ -77,7 +77,7 @@ class AttractionPlace {
         lat: json["lat"].toDouble(),
         long: json["long"].toDouble(),
         contact: Contact.fromJson(json["contact"]),
-        reviews: Reviews.fromJson(json["reviews"]),
+        reviews: Reviews.fromJson(json["review_page"]),
         addressEn: Address.fromJson(json["address_en"]),
         titleEn: json["title_en"],
       );
@@ -101,7 +101,7 @@ class AttractionPlace {
         "lat": lat,
         "long": long,
         "contact": contact?.toJson(),
-        "reviews": reviews?.toJson(),
+        "review_page": reviews?.toJson(),
         "address_en": addressEn?.toJson(),
         "title_en": titleEn,
       };

@@ -1,3 +1,4 @@
+import 'package:aunjai/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class Rating extends StatelessWidget {
@@ -12,15 +13,24 @@ class Rating extends StatelessWidget {
         widgets.add(Icon(
           Icons.star,
           size: size ?? 18.0,
+          color: AppTheme.primaryColor,
         ));
       }
 
       if (star.toInt() != star) {
-        widgets.add(Icon(Icons.star_half, size: size ?? 18.0));
+        widgets.add(Icon(
+          Icons.star_half,
+          size: size ?? 18.0,
+          color: AppTheme.primaryColor,
+        ));
       }
 
       for (int i = 0; i < 5 - widgets.length; i++) {
-        widgets.add(Icon(Icons.star_border, size: size ?? 18.0));
+        widgets.add(Icon(
+          Icons.star_border,
+          size: size ?? 18.0,
+          color: AppTheme.primaryColor,
+        ));
       }
       return widgets;
     }

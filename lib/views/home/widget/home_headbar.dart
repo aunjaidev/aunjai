@@ -1,9 +1,7 @@
+import 'package:aunjai/views/widgets/common.dart';
 import 'package:flutter/material.dart';
 import 'package:aunjai/app_theme.dart';
 import 'package:aunjai/utils/media_size.dart';
-import 'package:aunjai/views/widgets/get_textfilecustome.dart';
-import 'package:aunjai/views/widgets/notification_badge.dart';
-import 'package:aunjai/views/widgets/vertical.dart';
 
 class HomeHeaderBar extends StatefulWidget {
   const HomeHeaderBar({Key? key}) : super(key: key);
@@ -16,27 +14,21 @@ class _HomeHeaderBarState extends State<HomeHeaderBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: const EdgeInsets.symmetric(
-            horizontal: AppTheme.layoutPadding),
+        padding: const EdgeInsets.symmetric(horizontal: AppTheme.layoutPadding),
         width: Helper.getScreenWidth(context),
         height: 120.0,
         child: Column(
           children: [
-            const Vertical(AppTheme.layoutPadding),
+            WidgetCommon.vertical(AppTheme.layoutPadding),
             Row(
               children: [
                 Flexible(
                     flex: 9,
-                    child: getTextFieldCustome(context,
+                    child: WidgetCommon.textField(context,
                         label: "Search Destination")),
                 Flexible(
                     flex: 1,
-                    child: NotificationBadge(
-                      onTap: () {},
-                      text: "x",
-                      notificationCount: 4,
-                      iconData: Icons.notifications,
-                    ))
+                    child: WidgetCommon.notificationBadge())
               ],
             ),
             Row(
@@ -47,8 +39,7 @@ class _HomeHeaderBarState extends State<HomeHeaderBar> {
                     children: [
                       Text(
                         "Roi-et, Roi-et Thailand",
-                        style:
-                        AppTheme.customeStyle(color: Colors.white),
+                        style: AppTheme.customeStyle(color: Colors.white),
                       ),
                       const Icon(
                         Icons.arrow_drop_down_outlined,

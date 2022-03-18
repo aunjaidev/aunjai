@@ -1,14 +1,12 @@
 import 'package:aunjai/views/attraction/widget/opentime_widget.dart';
+import 'package:aunjai/views/widgets/common.dart';
 import 'package:aunjai/views/widgets/rating_widget.dart';
-import 'package:aunjai/views/widgets/reviews_widget.dart';
+import 'package:aunjai/views/widgets/reviews/review_section.dart';
 import 'package:aunjai/views/widgets/slide_horizontal_widget.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:getwidget/getwidget.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:aunjai/app_theme.dart';
 import 'package:aunjai/utils/media_size.dart';
-import 'package:aunjai/views/widgets/get_rating.dart';
-import 'package:aunjai/views/widgets/horizontal.dart';
-import 'package:aunjai/views/widgets/vertical.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
@@ -21,10 +19,8 @@ class AttractionScreen extends StatefulWidget {
 }
 
 class _AttractionScreenState extends State<AttractionScreen> {
-
   late PhotoViewController photoViewController;
   late PageController pageController;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final List<String> _thumbnailPhoto = [
     "https://cdn.pixabay.com/photo/2017/12/03/18/04/christmas-balls-2995437_960_720.jpg",
@@ -100,54 +96,18 @@ class _AttractionScreenState extends State<AttractionScreen> {
     super.initState();
     photoViewController = PhotoViewController();
     pageController = PageController();
-
   }
 
   @override
   void dispose() {
     pageController.dispose();
     super.dispose();
-
-
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
-      appBar: GFAppBar(
-        titleSpacing: -15.0,
-        backgroundColor: AppTheme.primaryColor,
-        leading: GFIconButton(
-          hoverColor: Colors.transparent,
-          splashColor: Colors.transparent,
-          highlightColor: Colors.transparent,
-          icon: const Icon(
-            Icons.arrow_back_ios,
-            color: Colors.white,
-          ),
-          onPressed: () {},
-          type: GFButtonType.transparent,
-        ),
-        actions: <Widget>[
-          GFIconButton(
-            icon: const Icon(
-              Icons.ios_share,
-              color: Colors.white,
-            ),
-            onPressed: () {},
-            type: GFButtonType.transparent,
-          ),
-          GFIconButton(
-            icon: const Icon(
-              Icons.bookmark_border,
-              color: Colors.white,
-            ),
-            onPressed: () {},
-            type: GFButtonType.transparent,
-          ),
-        ],
-      ),
+      appBar: WidgetCommon.appBar(actions: []),
       body: Container(
         color: Colors.white,
         width: Helper.getScreenWidth(context),
@@ -207,7 +167,7 @@ class _AttractionScreenState extends State<AttractionScreen> {
                     children: [
                       AppTheme.titleAppbar("Temple Of Dawn (Wat Arun)",
                           color: Colors.white),
-                      const Vertical(10.0),
+                      WidgetCommon.vertical(10.0),
                       Row(
                         children: [
                           const Icon(Icons.location_pin,
@@ -216,15 +176,14 @@ class _AttractionScreenState extends State<AttractionScreen> {
                               color: Colors.white, fontSize: 16)
                         ],
                       ),
-                      const Vertical(10.0),
+                      WidgetCommon.vertical(10.0),
                       AppTheme.normalText(
                           " Points of Interest & Landmarks • Religious Sites",
                           color: Colors.white,
                           fontSize: 16),
-                      const Vertical(10.0),
-                      GetRatingStarWidget(
+                      WidgetCommon.vertical(10.0),
+                      Rating(
                         rating: 3.5,
-                        color: Colors.white,
                         size: 25.0,
                       ),
                     ],
@@ -255,13 +214,13 @@ class _AttractionScreenState extends State<AttractionScreen> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Vertical(2.5),
+                      WidgetCommon.vertical(2.5),
                       AppTheme.contentHeader("About"),
                       AppTheme.normalContentText(
                           "A nice quaint cafe with a good view of the lower city and mountains. Good to visit even when cloudy or raining because they have a friendly pupper to keep guests company as you."),
-                      const Vertical(2.5),
+                      WidgetCommon.vertical(2.5),
                       const OpenTimeWidget(),
-                      const Vertical(2.5),
+                      WidgetCommon.vertical(2.5),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -269,7 +228,7 @@ class _AttractionScreenState extends State<AttractionScreen> {
                           AppTheme.normalText(
                               '2 Sanamchai Road Grand Palace Subdistrict, Pranakorn District, Bangkok 10200'),
                           Container(
-                            margin: EdgeInsets.symmetric(vertical: 10.0),
+                            margin: const EdgeInsets.symmetric(vertical: 10.0),
                             decoration: AppTheme.getDecoration(
                                 color: Colors.cyan, borderRadius: 10.0),
                             width: Helper.getScreenWidth(context),
@@ -304,46 +263,48 @@ class _AttractionScreenState extends State<AttractionScreen> {
                           const SlideHorizontalWidget()
                         ],
                       ),
-                      const Vertical(5),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              AppTheme.contentHeader("Reviews"),
-                              GFButton(
-                                child:
-                                    AppTheme.buttonTextWidget("Write Review"),
-                                onPressed: () {},
-                                shape: GFButtonShape.pills,
-                                size: 30.0,
-                              ),
-                            ],
-                          ),
-                          Vertical(5.0),
+                          AppTheme.contentHeader("Popular mentions"),
+                          SizedBox(
+                            height: 50,
+                            width: Helper.getScreenWidth(context),
+                            child: ListView(
+                              scrollDirection: Axis.horizontal,
+                              children: getMentionWidgets(),
+                            ),
+                          )
+                        ],
+                      ),
+                      WidgetCommon.vertical(15),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          AppTheme.contentHeader("Reviews"),
+                          WidgetCommon.vertical(5.0),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Column(
                                 children: [
-                                  Text(
+                                  const Text(
                                     "3.5",
                                     style: TextStyle(fontSize: 50.0),
                                   ),
-                                  Vertical(5.0),
+                                  WidgetCommon.vertical(5.0),
                                   Rating(
                                     rating: 3.5,
                                   ),
-                                  Vertical(5.0),
-                                  Text(
-                                    "from 1000 reviews",
-                                    style: TextStyle(fontSize: 14.0),
+                                  WidgetCommon.vertical(5.0),
+                                  const Text(
+                                    "from 1000 review_page",
+                                    style: const TextStyle(fontSize: 14.0),
                                   ),
                                 ],
                               ),
-                              const Horizontal(15),
+                              WidgetCommon.horizontal(15),
                               Expanded(
                                 child: SizedBox(
                                   width: Helper.getScreenWidth(context),
@@ -365,6 +326,7 @@ class _AttractionScreenState extends State<AttractionScreen> {
                                       ),
                                       Expanded(
                                         child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceAround,
                                           children: [
@@ -384,23 +346,15 @@ class _AttractionScreenState extends State<AttractionScreen> {
                           ),
                         ],
                       ),
-                      const Vertical(30.0),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      WidgetCommon.vertical(30.0),
+                      Row(
                         children: [
-                          AppTheme.contentHeader("Popular mentions"),
-                          Container(
-                            height: 50,
-                            width: Helper.getScreenWidth(context),
-    margin: EdgeInsets.only(top: 5.0),
-                            child: ListView(
-                              scrollDirection: Axis.horizontal,
-                              children: getMentionWidgets(),
-                            ),
-                          )
+                          Flexible(
+                              child: WidgetCommon.button(context,
+                                  label: "Write Review", onTap: () {}))
                         ],
                       ),
-                      ReviewsWidget()
+                      const ReviewSection()
                     ],
                   ),
                 ],
@@ -409,23 +363,42 @@ class _AttractionScreenState extends State<AttractionScreen> {
           ],
         ),
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(FontAwesomeIcons.home),
+            label: 'เพิ่มรูปภาพ',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(FontAwesomeIcons.infoCircle),
+            label: 'รีวิว',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(FontAwesomeIcons.userAlt),
+            label: 'เช็คอิน',
+          ),
+        ],
+        // currentIndex: _selectedIndex,
+        // onTap: _onItemTapped,
+      ),
     );
   }
 
   getRatingProgressBar(percentage) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Flexible(
-          child: GFProgressBar(
-            percentage: percentage,
-            lineHeight: 5,
-            alignment: MainAxisAlignment.spaceBetween,
-            backgroundColor: Colors.black26,
-            progressBarColor: GFColors.INFO,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5.0),
+            child: WidgetCommon.progressbar(95),
           ),
           flex: 10,
         ),
-        Flexible(flex: 2, child: AppTheme.normalText("95"))
+        Flexible(flex: 2, child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5.0),
+          child: AppTheme.normalText("95"),
+        ))
       ],
     );
   }
@@ -434,14 +407,14 @@ class _AttractionScreenState extends State<AttractionScreen> {
     List<Widget> widgets = [];
     for (var label in mentions) {
       widgets.add(Container(
-        margin: EdgeInsets.all(5.0),
+        margin: const EdgeInsets.all(5.0),
         height: 35,
-        padding: EdgeInsets.symmetric(vertical: 2.5, horizontal: 10),
+        padding: const EdgeInsets.symmetric(vertical: 2.5, horizontal: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(100),
           color: Colors.white,
           boxShadow: [
-            BoxShadow(color: Colors.grey, spreadRadius: 1.5),
+            const BoxShadow(color: Colors.grey, spreadRadius: 1.5),
           ],
         ),
         child: Center(
