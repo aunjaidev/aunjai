@@ -4,6 +4,7 @@ import 'package:aunjai/utils/text.common.dart';
 import 'package:aunjai/utils/widgets/appbar.dart';
 import 'package:aunjai/utils/widgets/horizontal.dart';
 import 'package:aunjai/utils/widgets/vertical.dart';
+import 'package:aunjai/views/profile/drawer/index.dart';
 import 'package:flutter/material.dart';
 
 class Profile extends StatefulWidget {
@@ -19,6 +20,7 @@ class ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: DrawerCustom.add(),
       appBar: appBar(context,
           backColor: Colors.white,
           leading: InkWell(

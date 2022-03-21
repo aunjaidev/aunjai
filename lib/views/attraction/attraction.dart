@@ -1,7 +1,6 @@
 import 'package:aunjai/utils/app_theme.dart';
 import 'package:aunjai/utils/text.common.dart';
 import 'package:aunjai/utils/widgets/appbar.dart';
-import 'package:aunjai/utils/widgets/button.dart';
 import 'package:aunjai/utils/widgets/decoration.dart';
 import 'package:aunjai/utils/widgets/get_rating_star.dart';
 import 'package:aunjai/utils/widgets/horizontal.dart';
@@ -11,7 +10,6 @@ import 'package:aunjai/utils/widgets/reviews/review_section.dart';
 import 'package:aunjai/utils/widgets/opentime_widget.dart';
 import 'package:aunjai/utils/widgets/vertical.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:aunjai/utils/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
