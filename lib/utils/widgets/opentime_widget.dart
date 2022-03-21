@@ -19,7 +19,7 @@ class _OpenTimeWidgetState extends State<OpenTimeWidget> {
         children: [
           Expanded(
               child: Container(
-            margin: EdgeInsets.symmetric(vertical: 15.0),
+            margin: const EdgeInsets.symmetric(vertical: 15.0),
             child: Column(
               children: [
                 InkWell(
@@ -70,29 +70,7 @@ class _OpenTimeWidgetState extends State<OpenTimeWidget> {
                     : const SizedBox(),
               ],
             ),
-          )
-              //     GFAccordion(
-              //   collapsedTitleBackgroundColor: Colors.transparent,
-              //   contentBackgroundColor: Colors.transparent,
-              //   expandedTitleBackgroundColor: Colors.transparent,
-              //   titlePadding: const EdgeInsets.symmetric(horizontal: 0),
-              //   collapsedIcon:
-              //   titleChild: Transform.translate(
-              //     offset: const Offset(-10, 0),
-              //     child: AppTheme.contentHeader("OpenTime"),
-              //   ),
-              //   expandedIcon: Row(
-              //     children: [
-              //       AppTheme.normalText("Sunday 08.00-19.00",
-              //           color: Colors.green,
-              //           fontSize: 16.0,
-              //           fontWeight: FontWeight.w400),
-              //       const Icon(Icons.keyboard_arrow_up)
-              //     ],
-              //   ),
-
-              // )
-              )
+          ))
         ]);
   }
 

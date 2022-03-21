@@ -2,7 +2,10 @@ import 'dart:math';
 
 import 'package:aunjai/utils/helper.dart';
 import 'package:aunjai/utils/text.common.dart';
-import 'package:aunjai/utils/widgets/widgets.common.dart';
+import 'package:aunjai/utils/widgets/expandableText.dart';
+import 'package:aunjai/utils/widgets/get_rating_star.dart';
+import 'package:aunjai/utils/widgets/horizontal.dart';
+import 'package:aunjai/utils/widgets/vertical.dart';
 import 'package:flutter/material.dart';
 
 class ReviewPost extends StatefulWidget {
@@ -65,13 +68,13 @@ class _ReviewPostState extends State<ReviewPost> {
                     radius: 25,
                     backgroundImage: NetworkImage(avatar),
                   ),
-                  WidgetsCommon.horizontal(10.0),
+                  Horizontal(10.0),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TextCommon.normalText(name,
                           fontSize: 18.0, fontWeight: FontWeight.w500),
-                      WidgetsCommon.rating(score: rating),
+                      ratingStar(score: rating),
                     ],
                   )
                 ],
@@ -83,13 +86,13 @@ class _ReviewPostState extends State<ReviewPost> {
               ),
             ],
           ),
-          WidgetsCommon.vertical(5),
+          Vertical(5),
           Text(
             keyMention,
             style: TextCommon.customeStyle(
                 fontSize: 20.0, fontWeight: FontWeight.w400, height: 1.35),
           ),
-          WidgetsCommon.expandableText(text: content, trimLines: 3),
+          ExpandableText(content, trimLines: 3),
           SizedBox(
             width: Helper.getScreenWidth(context),
             height: 105,

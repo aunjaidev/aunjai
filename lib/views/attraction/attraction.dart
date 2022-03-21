@@ -1,9 +1,17 @@
+import 'package:aunjai/utils/app_theme.dart';
 import 'package:aunjai/utils/text.common.dart';
+import 'package:aunjai/utils/widgets/appbar.dart';
+import 'package:aunjai/utils/widgets/button.dart';
+import 'package:aunjai/utils/widgets/decoration.dart';
+import 'package:aunjai/utils/widgets/get_rating_star.dart';
+import 'package:aunjai/utils/widgets/horizontal.dart';
+import 'package:aunjai/utils/widgets/media_carousel_horizontal.dart';
+import 'package:aunjai/utils/widgets/progressbar.dart';
 import 'package:aunjai/utils/widgets/reviews/review_section.dart';
-import 'package:aunjai/utils/widgets/widgets.common.dart';
-import 'package:aunjai/views/attraction/widget/opentime_widget.dart';
+import 'package:aunjai/utils/widgets/opentime_widget.dart';
+import 'package:aunjai/utils/widgets/vertical.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:aunjai/app_theme.dart';
 import 'package:aunjai/utils/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
@@ -105,7 +113,7 @@ class _AttractionScreenState extends State<AttractionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: WidgetsCommon.appBar(context, actions: []),
+      appBar: appBar(context, actions: []),
       body: Container(
         color: Colors.white,
         width: Helper.getScreenWidth(context),
@@ -165,7 +173,7 @@ class _AttractionScreenState extends State<AttractionScreen> {
                     children: [
                       TextCommon.contentHeader("Temple Of Dawn (Wat Arun)",
                           color: Colors.white),
-                      WidgetsCommon.vertical(10.0),
+                      const Vertical(10.0),
                       Row(
                         children: [
                           const Icon(Icons.location_pin,
@@ -174,13 +182,13 @@ class _AttractionScreenState extends State<AttractionScreen> {
                               color: Colors.white, fontSize: 16)
                         ],
                       ),
-                      WidgetsCommon.vertical(10.0),
+                      const Vertical(10.0),
                       TextCommon.normalText(
                           " Points of Interest & Landmarks • Religious Sites",
                           color: Colors.white,
                           fontSize: 16),
-                      WidgetsCommon.vertical(10.0),
-                      WidgetsCommon.rating(
+                      const Vertical(10.0),
+                      ratingStar(
                         score: 3.5,
                         size: 25.0,
                       ),
@@ -193,8 +201,8 @@ class _AttractionScreenState extends State<AttractionScreen> {
                     child: Container(
                       width: 50,
                       height: 25,
-                      decoration: WidgetsCommon.decoration(
-                          color: Colors.white, borderRadius: 5.0),
+                      decoration:
+                          decoration(color: Colors.white, borderRadius: 5.0),
                       child: Center(
                         child: TextCommon.normalText(
                           '$_currentImage / ${_thumbnailPhoto.length}',
@@ -204,183 +212,154 @@ class _AttractionScreenState extends State<AttractionScreen> {
                     ))
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      WidgetsCommon.vertical(2.5),
-                      TextCommon.contentHeader("About"),
-                      TextCommon.normalContentText(
-                          "A nice quaint cafe with a good view of the lower city and mountains. Good to visit even when cloudy or raining because they have a friendly pupper to keep guests company as you."),
-                      WidgetsCommon.vertical(2.5),
-                      const OpenTimeWidget(),
-                      WidgetsCommon.vertical(2.5),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          TextCommon.contentHeader("Location"),
-                          TextCommon.normalText(
-                              '2 Sanamchai Road Grand Palace Subdistrict, Pranakorn District, Bangkok 10200'),
-                          Container(
-                            margin: const EdgeInsets.symmetric(vertical: 10.0),
-                            decoration: WidgetsCommon.decoration(
-                                color: Colors.cyan, borderRadius: 10.0),
-                            width: Helper.getScreenWidth(context),
-                            height: 250,
-                            child: Stack(
+            getAboutContent(),
+            const Padding(
+              padding:  EdgeInsets.only(left: 10,),
+              child:  MediaCarouselHorizontalWidget(),
+            ),
+
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextCommon.contentHeader("Popular mentions"),
+                SizedBox(
+                  height: 50,
+                  width: Helper.getScreenWidth(context),
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: getMentionWidgets(),
+                  ),
+                )
+              ],
+            ),
+
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+
+
+
+                    const Vertical(15),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextCommon.contentHeader("Reviews"),
+                        const Vertical(5.0),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Column(
                               children: [
-                                Positioned.fill(
-                                    child: Align(
-                                  alignment: Alignment.center,
-                                  child: Container(
+                                const Text(
+                                  "3.5",
+                                  style: TextStyle(fontSize: 50.0),
+                                ),
+                                const Vertical(5.0),
+                                ratingStar(
+                                  score: 3.5,
+                                ),
+                                const Vertical(5.0),
+                                Container(
                                     width: 100,
-                                    height: 50,
-                                    decoration: WidgetsCommon.decoration(
-                                        color: Colors.black.withOpacity(0.2),
-                                        borderRadius: 5.0),
-                                    child: Center(
-                                      child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: const [
-                                            Icon(Icons.fullscreen),
-                                            Text("ดูแผนที่")
-                                          ]),
-                                    ),
-                                  ),
-                                ))
+                                    child: TextCommon.normalText(
+                                        "from 100000000",
+                                        align: TextAlign.center,
+                                        fontSize: 14))
                               ],
                             ),
-                          ),
-                          const MediaCarouselHorizontalWidget()
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                            const Horizontal(15),
+                            Expanded(
+                              child: SizedBox(
+                                width: Helper.getScreenWidth(context),
+                                height: 100,
+                                child: Row(
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        TextCommon.normalText("Excellent"),
+                                        TextCommon.normalText("VeryGood"),
+                                        TextCommon.normalText("Average"),
+                                        TextCommon.normalText("Poor"),
+                                        TextCommon.normalText("Terrible"),
+                                      ],
+                                    ),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: [
+                                          getRatingProgressBar(0.1),
+                                          getRatingProgressBar(0.5),
+                                          getRatingProgressBar(0.2),
+                                          getRatingProgressBar(0.9),
+                                          getRatingProgressBar(1.0),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                    const Vertical(30.0),
+                    Center(
+                      child: Column(
                         children: [
-                          TextCommon.contentHeader("Popular mentions"),
-                          SizedBox(
-                            height: 50,
-                            width: Helper.getScreenWidth(context),
-                            child: ListView(
-                              scrollDirection: Axis.horizontal,
-                              children: getMentionWidgets(),
+                          CircleAvatar(),
+                          TextCommon.normalText("ให้คะแนนสำหรับสถานที่นี้"),
+                          RatingBar.builder(
+                            initialRating: 0,
+                            minRating: 0,
+                            direction: Axis.horizontal,
+                            allowHalfRating: true,
+                            itemCount: 5,
+                            unratedColor: Colors.black12,
+                            glow: false,
+                            itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                            itemBuilder: (context, _) => const Icon(
+                              Icons.star,
+                              color: AppTheme.primary1,
                             ),
+                            onRatingUpdate: (rating) {
+                              print(rating);
+                            },
                           )
                         ],
                       ),
-                      WidgetsCommon.vertical(15),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          TextCommon.contentHeader("Reviews"),
-                          WidgetsCommon.vertical(5.0),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Column(
-                                children: [
-                                  const Text(
-                                    "3.5",
-                                    style: TextStyle(fontSize: 50.0),
-                                  ),
-                                  WidgetsCommon.vertical(5.0),
-                                  WidgetsCommon.rating(
-                                    score: 3.5,
-                                  ),
-                                  WidgetsCommon.vertical(5.0),
-                                  Container(
-                                      width: 100,
-                                      child: TextCommon.normalText(
-                                          "from 100000000",
-                                          align: TextAlign.center,
-                                          fontSize: 14))
-                                ],
-                              ),
-                              WidgetsCommon.horizontal(15),
-                              Expanded(
-                                child: SizedBox(
-                                  width: Helper.getScreenWidth(context),
-                                  height: 100,
-                                  child: Row(
-                                    children: [
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          TextCommon.normalText("Excellent"),
-                                          TextCommon.normalText("VeryGood"),
-                                          TextCommon.normalText("Average"),
-                                          TextCommon.normalText("Poor"),
-                                          TextCommon.normalText("Terrible"),
-                                        ],
-                                      ),
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
-                                          children: [
-                                            getRatingProgressBar(0.1),
-                                            getRatingProgressBar(0.5),
-                                            getRatingProgressBar(0.2),
-                                            getRatingProgressBar(0.9),
-                                            getRatingProgressBar(1.0),
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
-                      WidgetsCommon.vertical(30.0),
-                      Row(
-                        children: [
-                          Flexible(
-                              child: WidgetsCommon.button(context,
-                                  label: "Write Review", onTap: () {}))
-                        ],
-                      ),
-                      const ReviewSection()
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                    const ReviewSectionWithMore()
+                  ],
+                ),
+              ],
             )
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.home),
-            label: 'เพิ่มรูปภาพ',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.infoCircle),
-            label: 'รีวิว',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.userAlt),
-            label: 'เช็คอิน',
-          ),
-        ],
-        // currentIndex: _selectedIndex,
-        // onTap: _onItemTapped,
+      bottomSheet: Container(
+        width: Helper.getScreenWidth(context),
+        height: 60,
+        color: Colors.transparent,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            getActivitiesButton(icon: Icons.star_rate,label: "Add Photo"),
+            getActivitiesButton(icon: Icons.reviews,label: "Review"),
+            getActivitiesButton(icon: Icons.my_location,label: "Check-In")
+          ],
+        ),
       ),
     );
   }
@@ -392,7 +371,7 @@ class _AttractionScreenState extends State<AttractionScreen> {
         Flexible(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5.0),
-            child: WidgetsCommon.progressbar(95),
+            child: progressbar(95),
           ),
           flex: 10,
         ),
@@ -428,5 +407,92 @@ class _AttractionScreenState extends State<AttractionScreen> {
       ));
     }
     return widgets;
+  }
+
+  getActivitiesButton({required IconData icon,required String label}) {
+    return Flexible(
+      flex: 5,
+      child: InkWell(
+        child: Container(
+          margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 5),
+          width: Helper.getScreenWidth(context),
+          height: 50,
+          child: Container(
+            decoration:
+                decoration(color: AppTheme.primary1, borderRadius: 10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Icon(
+                  icon,
+                  color: Colors.white,
+                ),
+                const Horizontal(5.0),
+                TextCommon.normalText(label, color: Colors.white)
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  getLocationMap() {
+    return  Container(
+      margin: const EdgeInsets.symmetric(vertical: 10.0),
+      decoration: decoration(
+          color: Colors.cyan, borderRadius: 10.0),
+      width: Helper.getScreenWidth(context),
+      height: 250,
+      child: Stack(
+        children: [
+          Positioned.fill(
+              child: Align(
+                alignment: Alignment.center,
+                child: Container(
+                  width: 100,
+                  height: 50,
+                  decoration: decoration(
+                      color: Colors.black.withOpacity(0.2),
+                      borderRadius: 5.0),
+                  child: Center(
+                    child: Row(
+                        mainAxisAlignment:
+                        MainAxisAlignment.center,
+                        crossAxisAlignment:
+                        CrossAxisAlignment.center,
+                        children: const [
+                          Icon(Icons.fullscreen),
+                          Text("ดูแผนที่")
+                        ]),
+                  ),
+                ),
+              ))
+        ],
+      ),
+    );
+  }
+
+  getAboutContent() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Vertical(2.5),
+          TextCommon.contentHeader("About"),
+          TextCommon.normalContentText(
+              "A nice quaint cafe with a good view of the lower city and mountains. Good to visit even when cloudy or raining because they have a friendly pupper to keep guests company as you."),
+          const Vertical(2.5),
+          const OpenTimeWidget(),
+          const Vertical(2.5),
+          TextCommon.contentHeader("Location"),
+          TextCommon.normalText(
+              '2 Sanamchai Road Grand Palace Subdistrict, Pranakorn District, Bangkok 10200'),
+          getLocationMap(),
+        ],
+      ),
+    );
   }
 }

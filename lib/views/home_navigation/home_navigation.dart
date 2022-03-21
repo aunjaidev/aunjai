@@ -1,6 +1,7 @@
+import 'package:aunjai/views/profile/index.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:aunjai/views/home/home.dart';
+import 'package:aunjai/views/home/index.dart';
 
 class AppHomeNavigation extends StatefulWidget {
   const AppHomeNavigation({Key? key}) : super(key: key);
@@ -13,7 +14,7 @@ class _AppHomeNavigationState extends State<AppHomeNavigation> {
   final List<Widget> _screens = [
     const Home(),
     const Home(),
-    const Home(),
+    const Profile(),
   ];
   late int _selectedIndex = 0;
   void _onItemTapped(int index) {

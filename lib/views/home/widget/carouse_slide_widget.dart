@@ -1,5 +1,5 @@
  import 'package:flutter/material.dart';
-import 'package:aunjai/app_theme.dart';
+import 'package:aunjai/utils/app_theme.dart';
 import 'package:aunjai/mock/carousel_model.dart';
 import 'package:aunjai/utils/helper.dart';
 
@@ -65,8 +65,8 @@ class _CarouseSlideWidgetState extends State<CarouseSlideWidget> {
       width: currentSlider == index ? 25 : 7,
       decoration: BoxDecoration(
           color: currentSlider == index
-              ? AppTheme.primaryColor
-              : AppTheme.primaryColor.withAlpha(70),
+              ? AppTheme.primary1
+              : AppTheme.primary1.withAlpha(70),
           borderRadius: BorderRadius.circular(3)),
     );
   }

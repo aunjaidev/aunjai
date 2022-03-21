@@ -3,10 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-
 class Helper {
-
-  static const double layoutPadding = 20.0;
+  static const double layoutPadding = 10.0;
 
   static double getScreenWidth(BuildContext context) {
     return MediaQuery.of(context).size.width;
@@ -24,13 +22,13 @@ class Helper {
       Image.memory(const Base64Decoder().convert(img), fit: BoxFit.contain);
 
   static readSvgPicture(String path, {width}) => SvgPicture.asset(
-    path,
-    fit: BoxFit.contain,
-    width: width,
-  );
+        path,
+        fit: BoxFit.contain,
+        width: width,
+      );
 
   static readPngPicture(String path, {width}) => Image.asset(
-    path,
-    width: width,
-  );
+        path,
+        width: width,
+      );
 }

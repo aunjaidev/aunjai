@@ -15,7 +15,7 @@ class _LandingPageState extends State<LandingPage> {
   void initState() {
     Future.delayed(
         const Duration(seconds: 5),
-        () => handleNavigationRoute(
+        () => RouteCommon.handleNavigationRoute(
             context: context, routeName: "/AppHomeNavigation"));
 
     super.initState();

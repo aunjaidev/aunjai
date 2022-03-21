@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       child: MaterialApp(
-        routes: routes,
+        routes: RouteCommon.routes,
         title: 'Aunjai',
         debugShowCheckedModeBanner: false,
         builder: (context, widget) => ResponsiveWrapper.builder(
