@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class Helper {
-  static const double layoutPadding = 10.0;
+  static const double layoutPadding = 15.0;
 
   static double getScreenWidth(BuildContext context) {
     return MediaQuery.of(context).size.width;

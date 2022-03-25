@@ -51,6 +51,7 @@ dependencies:
   auto_size_text: ^3.0.0
   flutter_rating_bar: ^4.0.0
   photo_view: ^0.13.0
+  sticky_headers: ^0.2.0
 
 dev_dependencies:
   flutter_test:
@@ -91,13 +92,13 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  fonts:
-    - family: Mitr
-      fonts:
-        - asset: assets/fonts/THSarabunNew.ttf
-        - asset: assets/fonts/THSarabunNew-Italic.ttf
-        - asset: assets/fonts/THSarabunNew-BoldItalic.ttf
-        - asset: assets/fonts/THSarabunNew-Bold.ttf
+#  fonts:
+#    - family: THSarabunNew
+#      fonts:
+#        - asset: assets/fonts/THSarabunNew.ttf
+#        - asset: assets/fonts/THSarabunNew-Italic.ttf
+#        - asset: assets/fonts/THSarabunNew-BoldItalic.ttf
+#        - asset: assets/fonts/THSarabunNew-Bold.ttf
 
   #
   # For details regarding fonts from package dependencies,

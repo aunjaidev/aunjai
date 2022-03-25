@@ -27,7 +27,7 @@ class _OpenTimeWidgetState extends State<OpenTimeWidget> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      TextCommon.contentHeader("OpenTime"),
+                      TextCommon.textContentTitle("OpenTime"),
                       Row(
                         children: [
                           TextCommon.normalText("Sunday 08.00-19.00",

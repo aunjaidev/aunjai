@@ -24,7 +24,7 @@ class MediaCarouselHorizontalWidget extends StatelessWidget {
         children: [
           Container(
             width: Helper.getScreenWidth(context),
-            margin: const EdgeInsets.only(top: 20, bottom: 5),
+            margin: const EdgeInsets.only(top: 20, bottom: 10,right: 10,left: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -62,7 +62,7 @@ class MediaCarouselHorizontalWidget extends StatelessWidget {
           ),
           SizedBox(
             width: Helper.getScreenWidth(context),
-            height: 230,
+            height: 260,
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
@@ -88,15 +88,15 @@ class MediaCarouselHorizontalWidget extends StatelessWidget {
             context: context, routeName: "/AttractionScreen", arguments: args);
       },
       child: Container(
-        margin: const EdgeInsets.only(right: 7.5),
-        width: 200,
-        height: 200,
+        margin: const EdgeInsets.only(left: 10.0),
+        width: 220,
+        height: 250,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
               width: double.infinity,
-              height: 130,
+              height: 150,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
                 child: Image.network(
@@ -113,12 +113,12 @@ class MediaCarouselHorizontalWidget extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 1.5),
                     child:
-                        TextCommon.textActivitiesTitle(getPlaceMock()["title"]),
+                        TextCommon.textContentTitle(getPlaceMock()["title"]),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 1.5),
-                    child: TextCommon.textActivitiesContent(
-                        getPlaceMock()["type"]),
+                    child: TextCommon.normalText(
+                        getPlaceMock()["type"],fontSize: 14.0),
                   ),
                   ratingStar(score: getPlaceMock()["rating"]),
                 ],

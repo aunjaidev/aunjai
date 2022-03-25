@@ -2,6 +2,8 @@ import 'package:aunjai/utils/app_theme.dart';
 import 'package:aunjai/utils/helper.dart';
 import 'package:aunjai/utils/text.common.dart';
 import 'package:aunjai/utils/widgets/appbar.dart';
+import 'package:aunjai/utils/widgets/button.dart';
+import 'package:aunjai/utils/widgets/decoration.dart';
 import 'package:aunjai/utils/widgets/horizontal.dart';
 import 'package:aunjai/utils/widgets/vertical.dart';
 import 'package:aunjai/views/profile/drawer/index.dart';
@@ -16,93 +18,137 @@ class Profile extends StatefulWidget {
 
 class ProfileState extends State<Profile> {
   late int _currentPage = 0;
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: DrawerCustom.add(),
+      key: _scaffoldKey,
       appBar: appBar(context,
           backColor: Colors.white,
           leading: InkWell(
-            child: Icon(
+            child: const Icon(
               Icons.menu,
               color: AppTheme.primary2,
             ),
-            onTap: () {},
+            onTap: () {
+              _scaffoldKey.currentState!.openDrawer();
+            },
           ),
           actions: [
             Container(
               width: 50,
               height: 50,
-              margin: EdgeInsets.symmetric(horizontal: 15.0),
+              margin: const EdgeInsets.symmetric(horizontal: 15.0),
               child: InkWell(
                 highlightColor: Colors.transparent,
                 splashColor: Colors.transparent,
                 onTap: () {
                   print("x");
                 },
-                child: Icon(
+                child: const Icon(
                   Icons.search,
                   color: AppTheme.primary2,
                 ),
               ),
             )
           ]),
-      body: SizedBox(
-        height: Helper.getScreenHeight(context),
-        width: Helper.getScreenWidth(context),
-        child: ListView(
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          physics: const ClampingScrollPhysics(),
-          children: [
-            SizedBox(
-              height: 190,
-              width: Helper.getScreenWidth(context),
-              child: Stack(
-                children: [
-                  Container(
-                    height: 120,
-                    width: Helper.getScreenWidth(context),
-                    color: AppTheme.primary2,
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: Row(
-                        children: [
-                          CircleAvatar(
-                            child: ClipOval(
-                              child: Image.network(
-                                "https://via.placeholder.com/150/92c952",
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                            backgroundColor: Colors.transparent,
-                            radius: 50,
-                          ),
-                          Horizontal(10.0),
-                          TextCommon.normalText("Nattapon .K",
-                              fontWeight: FontWeight.w600, fontSize: 22.0)
-                        ],
-                      ),
+      drawer: DrawerCustom.add(),
+      body: ListView(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        physics: const ClampingScrollPhysics(),
+        children: [
+          Stack(
+            clipBehavior: Clip.none,
+            alignment: Alignment.bottomCenter,
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Container(
+                      height: 150.0,
+                      decoration: const BoxDecoration(
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: NetworkImage(
+                                  'https://www.sageisland.com/wp-content/uploads/2017/06/beat-instagram-algorithm.jpg'))),
                     ),
-                  ),
+                  )
+                ],
+              ),
+              Positioned(
+                top: 50.0,
+                child: Container(
+                  height: 190.0,
+                  width: 190,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: const DecorationImage(
+                        fit: BoxFit.cover,
+                        image: NetworkImage(
+                            'http://cdn.ppcorn.com/us/wp-content/uploads/sites/14/2016/01/Mark-Zuckerberg-pop-art-ppcorn.jpg'),
+                      ),
+                      border: Border.all(color: Colors.white, width: 6.0)),
+                ),
+              ),
+            ],
+          ),
+          const Vertical(100),
+          Center(
+            child: TextCommon.normalText("Nattapon Kongnariang",
+                fontWeight: FontWeight.w600, fontSize: 30.0),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: SizedBox(
+              width: Helper.getScreenWidth(context),
+              child: Row(
+                children: [
+                  button("Follow", () {}),
+                  button("Message", () {}, btnColor: AppTheme.primary3)
                 ],
               ),
             ),
-            const Vertical(15.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          ),
+          SizedBox(
+            child: Column(
               children: [
-                buttonSwapPage("Feed", 0),
-                buttonSwapPage("Trips", 1),
-                buttonSwapPage("Photos", 2),
-                buttonSwapPage("Reviews", 3),
+                Row(
+                  children: [],
+                )
               ],
             ),
-          ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              buttonSwapPage("Feed", 0),
+              buttonSwapPage("Trips", 1),
+              buttonSwapPage("Photos", 2),
+              buttonSwapPage("Reviews", 3),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Flexible button(label, func, {Color? btnColor}) {
+    return Flexible(
+      flex: 5,
+      child: InkWell(
+        onTap: func,
+        child: Container(
+          margin: EdgeInsets.symmetric(horizontal: 5.0, vertical: 15.0),
+          width: double.infinity,
+          height: 40.0,
+          decoration: BoxDecoration(
+              color: btnColor ?? AppTheme.primary1,
+              borderRadius: BorderRadius.all(Radius.circular(5.0))),
+          child: Center(
+              child: TextCommon.normalText(label,
+                  fontSize: 18.0, fontWeight: FontWeight.w500)),
         ),
       ),
     );
@@ -134,10 +180,10 @@ class ProfileState extends State<Profile> {
                 ),
               ),
               _currentPage == order
-                  ? Divider(
+                  ? const Divider(
                       color: AppTheme.primary2,
                     )
-                  : Divider(
+                  : const Divider(
                       color: AppTheme.primary3,
                     )
             ],

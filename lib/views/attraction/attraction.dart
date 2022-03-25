@@ -14,6 +14,7 @@ import 'package:aunjai/utils/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
+import 'package:sticky_headers/sticky_headers.dart';
 
 class AttractionScreen extends StatefulWidget {
   const AttractionScreen({Key? key}) : super(key: key);
@@ -25,14 +26,17 @@ class AttractionScreen extends StatefulWidget {
 class _AttractionScreenState extends State<AttractionScreen> {
   late PhotoViewController photoViewController;
   late PageController pageController;
+  final ScrollController _controller = ScrollController();
+
+  final aboutKey = GlobalKey();
+
+  late int _indexSectionPage = 0;
+  late int _currentImage = 1;
+  late int _scrollPositionX = 0;
 
   final List<String> _thumbnailPhoto = [
-    "https://cdn.pixabay.com/photo/2017/12/03/18/04/christmas-balls-2995437_960_720.jpg",
-    "https://cdn.pixabay.com/photo/2017/12/13/00/23/christmas-3015776_960_720.jpg",
-    "https://cdn.pixabay.com/photo/2019/12/19/10/55/christmas-market-4705877_960_720.jpg",
-    "https://cdn.pixabay.com/photo/2019/12/20/00/03/road-4707345_960_720.jpg",
-    "https://cdn.pixabay.com/photo/2019/12/22/04/18/x-mas-4711785__340.jpg",
-    "https://cdn.pixabay.com/photo/2016/11/22/07/09/spruce-1848543__340.jpg"
+    "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/c2/78/15/caption.jpg?w=1200&h=-1&s=1",
+    "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/c2/79/27/caption.jpg?w=1200&h=-1&s=1",
   ];
 
   final List<String> mentions = [
@@ -53,7 +57,6 @@ class _AttractionScreenState extends State<AttractionScreen> {
     "culture",
     "clothes"
   ];
-  late int _currentImage = 1;
 
   // Future<void> getAlbum() async {
   //   HttpClient client = HttpClient();
@@ -97,6 +100,11 @@ class _AttractionScreenState extends State<AttractionScreen> {
     //     ModalRoute.of(context)!.settings.arguments as Map<String, String>;
     // getAlbum();
 
+    _controller.addListener(() {
+      _scrollPositionX = _controller.offset.toInt();
+      setState(() {});
+    });
+
     super.initState();
     photoViewController = PhotoViewController();
     pageController = PageController();
@@ -111,12 +119,12 @@ class _AttractionScreenState extends State<AttractionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(context, actions: []),
-      body: Container(
-        color: Colors.white,
+      appBar: null,
+      body: SizedBox(
         width: Helper.getScreenWidth(context),
         height: Helper.getScreenHeight(context),
         child: ListView(
+          controller: _controller,
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
           physics: const ClampingScrollPhysics(),
@@ -124,243 +132,444 @@ class _AttractionScreenState extends State<AttractionScreen> {
             Stack(
               children: [
                 SizedBox(
-                    width: Helper.getScreenWidth(context),
-                    height: 280,
-                    child: PhotoViewGallery.builder(
-                      pageController: pageController,
-                      onPageChanged: (p) => setState(() {
-                        _currentImage = p + 1;
-                      }),
-                      scrollPhysics: const ClampingScrollPhysics(),
-                      itemCount: _thumbnailPhoto.length,
-                      builder: (ctx, index) {
-                        return PhotoViewGalleryPageOptions.customChild(
-                          controller: photoViewController,
-                          child: InkWell(
-                            onTap: () {},
-                            child: Stack(
-                              children: [
-                                Container(
-                                  width: Helper.getScreenWidth(context),
-                                  height: 280,
-                                  decoration: BoxDecoration(
-                                      // color: Colors.black.withOpacity(0.35),
-                                      // colorBlendMode: BlendMode.colorBurn
-                                      image: DecorationImage(
-                                          fit: BoxFit.fill,
-                                          image: NetworkImage(
-                                              _thumbnailPhoto[index]))),
-                                ),
-                                Container(
-                                  width: Helper.getScreenWidth(context),
-                                  height: 300,
-                                  decoration: BoxDecoration(
-                                      color: Colors.black.withOpacity(0.5)),
-                                )
-                              ],
+                  height: 300.0,
+                  width: Helper.getScreenWidth(context),
+                  child: PhotoViewGallery.builder(
+                    pageController: pageController,
+                    onPageChanged: (p) => setState(() {
+                      _currentImage = p + 1;
+                    }),
+                    scrollPhysics: const ClampingScrollPhysics(),
+                    itemCount: _thumbnailPhoto.length,
+                    builder: (ctx, index) {
+                      return PhotoViewGalleryPageOptions.customChild(
+                        controller: photoViewController,
+                        child: InkWell(
+                          onTap: () {},
+                          child: Stack(
+                            children: [
+                              Container(
+                                width: Helper.getScreenWidth(context),
+                                height: 300,
+                                decoration: BoxDecoration(
+                                    // color: Colors.black.withOpacity(0.35),
+                                    // colorBlendMode: BlendMode.colorBurn
+                                    image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: NetworkImage(
+                                            _thumbnailPhoto[index]))),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                Positioned(
+                  top: 20,
+                  left: 20,
+                  right: 20,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25.0),
+                          color: Colors.black.withOpacity(0.5),
+                        ),
+                        child: const InkWell(
+                          child: Center(
+                            child: const Icon(
+                              Icons.arrow_back,
+                              size: 30.0,
+                              color: Colors.white,
                             ),
                           ),
-                        );
-                      },
-                    )),
-                Positioned(
-                  bottom: 25,
-                  left: 25,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextCommon.contentHeader("Temple Of Dawn (Wat Arun)",
-                          color: Colors.white),
-                      const Vertical(10.0),
-                      Row(
-                        children: [
-                          const Icon(Icons.location_pin,
-                              color: Colors.white, size: 16),
-                          TextCommon.normalText("Hanoi, Vietnam",
-                              color: Colors.white, fontSize: 16)
-                        ],
+                        ),
                       ),
-                      const Vertical(10.0),
-                      TextCommon.normalText(
-                          " Points of Interest & Landmarks • Religious Sites",
-                          color: Colors.white,
-                          fontSize: 16),
-                      const Vertical(10.0),
-                      ratingStar(
-                        score: 3.5,
-                        size: 25.0,
+                      Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25.0),
+                          color: Colors.black.withOpacity(0.5),
+                        ),
+                        child: const InkWell(
+                          child: Center(
+                            child: Icon(
+                              Icons.favorite_border,
+                              size: 30.0,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   ),
                 ),
                 Positioned(
-                    top: 20,
-                    right: 10,
+                    bottom: 20,
+                    right: 20,
                     child: Container(
-                      width: 50,
-                      height: 25,
-                      decoration:
-                          decoration(color: Colors.white, borderRadius: 5.0),
-                      child: Center(
-                        child: TextCommon.normalText(
-                          '$_currentImage / ${_thumbnailPhoto.length}',
-                          fontSize: 18.0,
-                        ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5.0),
+                        color: Colors.black.withOpacity(0.5),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 5.0, horizontal: 5.0),
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.photo_library_sharp,
+                            color: Colors.white,
+                          ),
+                          const Horizontal(5.0),
+                          TextCommon.normalText(
+                              '$_currentImage / ${_thumbnailPhoto.length}',
+                              color: Colors.white,
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w500)
+                        ],
                       ),
                     ))
               ],
             ),
-            getAboutContent(),
-            const Padding(
-              padding:  EdgeInsets.only(left: 10,),
-              child:  MediaCarouselHorizontalWidget(),
-            ),
+            StickyHeader(
+                header: Container(
+                  margin: EdgeInsets.only(top: _scrollPositionX > 290 ? 30 : 0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      buttonSwapPage("ภาพรวม", 0, () {
+                        // _controller.position.ensureVisible(
+                        //     aboutKey.currentContext.findRenderObject(),
+                        //     duration: Duration(seconds: 1),
+                        //     curve: Curves.easeOut);
 
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextCommon.contentHeader("Popular mentions"),
-                SizedBox(
-                  height: 50,
-                  width: Helper.getScreenWidth(context),
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: getMentionWidgets(),
+                        setState(() {
+                          _indexSectionPage = 0;
+                        });
+                      }),
+                      buttonSwapPage("รีวิว", 1, () {
+                        setState(() {
+                          _indexSectionPage = 1;
+                        });
+                      }),
+                      buttonSwapPage("Reviews", 2, () {
+                        setState(() {
+                          _indexSectionPage = 2;
+                        });
+                      }),
+                      buttonSwapPage("Reviews", 3, () {
+                        setState(() {
+                          _indexSectionPage = 3;
+                        });
+                      }),
+                    ],
                   ),
-                )
-              ],
-            ),
-
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-
-
-
-                    const Vertical(15),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TextCommon.contentHeader("Reviews"),
-                        const Vertical(5.0),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Column(
-                              children: [
-                                const Text(
-                                  "3.5",
-                                  style: TextStyle(fontSize: 50.0),
-                                ),
-                                const Vertical(5.0),
-                                ratingStar(
-                                  score: 3.5,
-                                ),
-                                const Vertical(5.0),
-                                Container(
-                                    width: 100,
-                                    child: TextCommon.normalText(
-                                        "from 100000000",
-                                        align: TextAlign.center,
-                                        fontSize: 14))
-                              ],
-                            ),
-                            const Horizontal(15),
-                            Expanded(
-                              child: SizedBox(
-                                width: Helper.getScreenWidth(context),
-                                height: 100,
-                                child: Row(
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        TextCommon.normalText("Excellent"),
-                                        TextCommon.normalText("VeryGood"),
-                                        TextCommon.normalText("Average"),
-                                        TextCommon.normalText("Poor"),
-                                        TextCommon.normalText("Terrible"),
-                                      ],
-                                    ),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: [
-                                          getRatingProgressBar(0.1),
-                                          getRatingProgressBar(0.5),
-                                          getRatingProgressBar(0.2),
-                                          getRatingProgressBar(0.9),
-                                          getRatingProgressBar(1.0),
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                    const Vertical(30.0),
-                    Center(
-                      child: Column(
-                        children: [
-                          CircleAvatar(),
-                          TextCommon.normalText("ให้คะแนนสำหรับสถานที่นี้"),
-                          RatingBar.builder(
-                            initialRating: 0,
-                            minRating: 0,
-                            direction: Axis.horizontal,
-                            allowHalfRating: true,
-                            itemCount: 5,
-                            unratedColor: Colors.black12,
-                            glow: false,
-                            itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-                            itemBuilder: (context, _) => const Icon(
-                              Icons.star,
-                              color: AppTheme.primary1,
-                            ),
-                            onRatingUpdate: (rating) {
-                              print(rating);
-                            },
-                          )
-                        ],
-                      ),
-                    ),
-                    const ReviewSectionWithMore()
-                  ],
                 ),
-              ],
-            )
-          ],
-        ),
-      ),
-      bottomSheet: Container(
-        width: Helper.getScreenWidth(context),
-        height: 60,
-        color: Colors.transparent,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            getActivitiesButton(icon: Icons.star_rate,label: "Add Photo"),
-            getActivitiesButton(icon: Icons.reviews,label: "Review"),
-            getActivitiesButton(icon: Icons.my_location,label: "Check-In")
+                content: Container(
+                  width: Helper.getScreenWidth(context),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [aboutSection()],
+                  ),
+                ))
           ],
         ),
       ),
     );
   }
+
+  buttonSwapPage(label, order, func) {
+    return Flexible(
+        flex: 5,
+        child: InkWell(
+          highlightColor: Colors.transparent,
+          splashColor: Colors.transparent,
+          onTap: func,
+          child: Column(
+            children: [
+              SizedBox(
+                height: 50,
+                width: Helper.getScreenWidth(context) / 4,
+                child: Center(
+                  child: TextCommon.normalText(label,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w700,
+                      color: _indexSectionPage == order
+                          ? AppTheme.primary2
+                          : AppTheme.primary3,
+                      align: TextAlign.center),
+                ),
+              ),
+              _indexSectionPage == order
+                  ? const Divider(
+                      color: AppTheme.primary2,
+                      height: 0.5,
+                    )
+                  : const Divider(color: AppTheme.primary3, height: 0.5)
+            ],
+          ),
+        ));
+  }
+
+  oldVersionn() => Scaffold(
+        appBar: appBar(context, actions: []),
+        body: Container(
+          color: Colors.white,
+          width: Helper.getScreenWidth(context),
+          height: Helper.getScreenHeight(context),
+          child: ListView(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            physics: const ClampingScrollPhysics(),
+            children: [
+              Stack(
+                children: [
+                  SizedBox(
+                      width: Helper.getScreenWidth(context),
+                      height: 280,
+                      child: PhotoViewGallery.builder(
+                        pageController: pageController,
+                        onPageChanged: (p) => setState(() {
+                          _currentImage = p + 1;
+                        }),
+                        scrollPhysics: const ClampingScrollPhysics(),
+                        itemCount: _thumbnailPhoto.length,
+                        builder: (ctx, index) {
+                          return PhotoViewGalleryPageOptions.customChild(
+                            controller: photoViewController,
+                            child: InkWell(
+                              onTap: () {},
+                              child: Stack(
+                                children: [
+                                  Container(
+                                    width: Helper.getScreenWidth(context),
+                                    height: 280,
+                                    decoration: BoxDecoration(
+                                        // color: Colors.black.withOpacity(0.35),
+                                        // colorBlendMode: BlendMode.colorBurn
+                                        image: DecorationImage(
+                                            fit: BoxFit.fill,
+                                            image: NetworkImage(
+                                                _thumbnailPhoto[index]))),
+                                  ),
+                                  Container(
+                                    width: Helper.getScreenWidth(context),
+                                    height: 300,
+                                    decoration: BoxDecoration(
+                                        color: Colors.black.withOpacity(0.5)),
+                                  )
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      )),
+                  Positioned(
+                    bottom: 25,
+                    left: 25,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextCommon.textContentTitle(
+                          "Temple Of Dawn (Wat Arun)",
+                        ),
+                        const Vertical(10.0),
+                        Row(
+                          children: [
+                            const Icon(Icons.location_pin,
+                                color: Colors.white, size: 16),
+                            TextCommon.normalText("Hanoi, Vietnam",
+                                color: Colors.white, fontSize: 16)
+                          ],
+                        ),
+                        const Vertical(10.0),
+                        TextCommon.normalText(
+                            " Points of Interest & Landmarks • Religious Sites",
+                            color: Colors.white,
+                            fontSize: 16),
+                        const Vertical(10.0),
+                        Row(
+                          children: [
+                            ratingStar(
+                              score: 3.5,
+                              size: 25.0,
+                            ),
+                            TextCommon.normalText("3.5/5 1000 รีวิว",color: Colors.black)
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                      top: 20,
+                      right: 10,
+                      child: Container(
+                        width: 50,
+                        height: 25,
+                        decoration:
+                            decoration(color: Colors.white, borderRadius: 5.0),
+                        child: Center(
+                          child: TextCommon.normalText(
+                            '$_currentImage / ${_thumbnailPhoto.length}',
+                            fontSize: 18.0,
+                          ),
+                        ),
+                      ))
+                ],
+              ),
+              const Padding(
+                padding: EdgeInsets.only(
+                  left: 10,
+                ),
+                child: MediaCarouselHorizontalWidget(),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextCommon.textContentTitle("Popular mentions"),
+                  SizedBox(
+                    height: 50,
+                    width: Helper.getScreenWidth(context),
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: getMentionWidgets(),
+                    ),
+                  )
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Vertical(15),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          TextCommon.textContentTitle("Reviews"),
+                          const Vertical(5.0),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Column(
+                                children: [
+                                  const Text(
+                                    "3.5",
+                                    style: TextStyle(fontSize: 50.0),
+                                  ),
+                                  const Vertical(5.0),
+                                  ratingStar(
+                                    score: 3.5,
+                                  ),
+                                  const Vertical(5.0),
+                                  SizedBox(
+                                      width: 100,
+                                      child: TextCommon.normalText(
+                                          "from 100000000",
+                                          align: TextAlign.center,
+                                          fontSize: 14))
+                                ],
+                              ),
+                              const Horizontal(15),
+                              Expanded(
+                                child: SizedBox(
+                                  width: Helper.getScreenWidth(context),
+                                  height: 100,
+                                  child: Row(
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          TextCommon.normalText("Excellent"),
+                                          TextCommon.normalText("VeryGood"),
+                                          TextCommon.normalText("Average"),
+                                          TextCommon.normalText("Poor"),
+                                          TextCommon.normalText("Terrible"),
+                                        ],
+                                      ),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: [
+                                            getRatingProgressBar(0.1),
+                                            getRatingProgressBar(0.5),
+                                            getRatingProgressBar(0.2),
+                                            getRatingProgressBar(0.9),
+                                            getRatingProgressBar(1.0),
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                      const Vertical(30.0),
+                      Center(
+                        child: Column(
+                          children: [
+                            const CircleAvatar(),
+                            TextCommon.normalText("ให้คะแนนสำหรับสถานที่นี้"),
+                            RatingBar.builder(
+                              initialRating: 0,
+                              minRating: 0,
+                              direction: Axis.horizontal,
+                              allowHalfRating: true,
+                              itemCount: 5,
+                              unratedColor: Colors.black12,
+                              glow: false,
+                              itemPadding:
+                                  const EdgeInsets.symmetric(horizontal: 4.0),
+                              itemBuilder: (context, _) => const Icon(
+                                Icons.star,
+                                color: AppTheme.primary1,
+                              ),
+                              onRatingUpdate: (rating) {
+                                print(rating);
+                              },
+                            )
+                          ],
+                        ),
+                      ),
+                      const ReviewSectionWithMore()
+                    ],
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+        bottomSheet: Container(
+          width: Helper.getScreenWidth(context),
+          height: 60,
+          color: Colors.transparent,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              getActivitiesButton(icon: Icons.star_rate, label: "Add Photo"),
+              getActivitiesButton(icon: Icons.reviews, label: "Review"),
+              getActivitiesButton(icon: Icons.my_location, label: "Check-In")
+            ],
+          ),
+        ),
+      );
 
   getRatingProgressBar(percentage) {
     return Row(
@@ -407,7 +616,7 @@ class _AttractionScreenState extends State<AttractionScreen> {
     return widgets;
   }
 
-  getActivitiesButton({required IconData icon,required String label}) {
+  getActivitiesButton({required IconData icon, required String label}) {
     return Flexible(
       flex: 5,
       child: InkWell(
@@ -437,58 +646,86 @@ class _AttractionScreenState extends State<AttractionScreen> {
   }
 
   getLocationMap() {
-    return  Container(
+    return Container(
       margin: const EdgeInsets.symmetric(vertical: 10.0),
-      decoration: decoration(
-          color: Colors.cyan, borderRadius: 10.0),
+      decoration: decoration(color: Colors.cyan, borderRadius: 10.0),
       width: Helper.getScreenWidth(context),
       height: 250,
       child: Stack(
         children: [
           Positioned.fill(
               child: Align(
-                alignment: Alignment.center,
-                child: Container(
-                  width: 100,
-                  height: 50,
-                  decoration: decoration(
-                      color: Colors.black.withOpacity(0.2),
-                      borderRadius: 5.0),
-                  child: Center(
-                    child: Row(
-                        mainAxisAlignment:
-                        MainAxisAlignment.center,
-                        crossAxisAlignment:
-                        CrossAxisAlignment.center,
-                        children: const [
-                          Icon(Icons.fullscreen),
-                          Text("ดูแผนที่")
-                        ]),
-                  ),
-                ),
-              ))
+            alignment: Alignment.center,
+            child: Container(
+              width: 100,
+              height: 50,
+              decoration: decoration(
+                  color: Colors.black.withOpacity(0.2), borderRadius: 5.0),
+              child: Center(
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: const [Icon(Icons.fullscreen), Text("ดูแผนที่")]),
+              ),
+            ),
+          ))
         ],
       ),
     );
   }
 
-  getAboutContent() {
+  aboutSection() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
       child: Column(
+        key: aboutKey,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Vertical(2.5),
-          TextCommon.contentHeader("About"),
-          TextCommon.normalContentText(
-              "A nice quaint cafe with a good view of the lower city and mountains. Good to visit even when cloudy or raining because they have a friendly pupper to keep guests company as you."),
-          const Vertical(2.5),
+          const Vertical(5.0),
+          TextCommon.textContentTitle(
+            "Temple Of Dawn (Wat Arun)",
+          ),
+          const Vertical(5.0),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  ratingStar(
+                    score: 3.5,
+                    size: 25.0,
+                  ),
+                  TextCommon.normalText("1000 รีวิว",color: Colors.black)
+                ],
+              ),
+              TextCommon.normalText(
+                  "โปราณสถาน",
+                  color: Colors.black,
+                  fontWeight: FontWeight.normal,
+                  fontSize: 15),
+            ],
+          ),
+
+          const Vertical(10.0),
+
+          Container(
+            width: Helper.getScreenWidth(context),
+            height: 150,
+            child: Row(
+              children: [
+                Container(
+                  width: 150,
+                  height: 150,
+                  color: Colors.red,
+                ),
+                Flexible(child: SizedBox(width: double.infinity,height: double.infinity,child:  TextCommon.normalText("2 Sanamchai Road Grand Palace Subdistrict, Pranakorn District, Bangkok 10200"),))
+              ],
+            ),
+          ),
+
+          const Vertical(5.0),
           const OpenTimeWidget(),
-          const Vertical(2.5),
-          TextCommon.contentHeader("Location"),
-          TextCommon.normalText(
-              '2 Sanamchai Road Grand Palace Subdistrict, Pranakorn District, Bangkok 10200'),
-          getLocationMap(),
+          const Vertical(5.0),
         ],
       ),
     );

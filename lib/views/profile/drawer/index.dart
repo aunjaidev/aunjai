@@ -4,5 +4,7 @@ class DrawerCustom {
 
   DrawerCustom._();
 
-  static add()=>Drawer();
+  static add()=>Drawer(
+    
+  );
 }
