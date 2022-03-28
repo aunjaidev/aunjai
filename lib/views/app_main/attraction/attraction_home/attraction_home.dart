@@ -162,13 +162,13 @@ class _AttractionHomeState extends State<AttractionHome> {
               child: Container(
                 width: Helper.getScreenWidth(context),
                 padding: const EdgeInsets.all(Helper.layoutPadding),
-                height: 70,
                 decoration: BoxDecoration(
                   color: mFillColor,
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(color: mBorderColor, width: 1),
                 ),
                 child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(
@@ -178,16 +178,19 @@ class _AttractionHomeState extends State<AttractionHome> {
                             padding: EdgeInsets.only(left: 16),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: <Widget>[
-                                normalText('Trip planner',fontSize: 22.0),
+                                normalText('Trip planner', fontSize: 22.0),
                                 Helper.widgetSpacePadding,
-                               subtitle("manage trips for you")
+                                subtitle("manage trips for you")
                               ],
                             )),
                       ],
                     ),
-                    Icon(Icons.arrow_forward_ios,size: 20,)
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      size: 20,
+                    )
                   ],
                 ),
               ),

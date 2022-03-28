@@ -74,7 +74,6 @@ class _AppMainState extends State<AppMain> {
               child: textContentTitle('Popular Destinations!'),
             ),
             SizedBox(
-              height: 140,
               child: ListView.builder(
                 itemCount: 10,
                 padding: const EdgeInsets.only(left: 16, right: 16),
@@ -86,14 +85,14 @@ class _AppMainState extends State<AppMain> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Container(
-                      height: 140,
-                      width: 120,
+                      height: 150,
+                      width: 130,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(color: mBorderColor, width: 1),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.only(top: 8.0, bottom: 16),
+                        padding: const EdgeInsets.only(top: 5.0, bottom: 5),
                         child: Column(
                           children: <Widget>[
                             Container(

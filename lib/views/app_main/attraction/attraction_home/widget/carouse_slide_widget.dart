@@ -17,16 +17,15 @@ class _CarouseSlideWidgetState extends State<CarouseSlideWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: Helper.layoutPadding),
+      margin: const EdgeInsets.symmetric(horizontal: Helper.layoutPadding),
       width: Helper.getScreenWidth(context),
-      height: 220,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
+          SizedBox(
             width: MediaQuery.of(context).size.width,
-            height: 200,
+            height: 210,
             child: Swiper(
               onIndexChanged: (index) {
                 setState(() {
