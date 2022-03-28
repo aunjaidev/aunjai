@@ -1,5 +1,4 @@
-import 'package:aunjai/utils/app_theme.dart';
-import 'package:aunjai/init.dart';
+import 'package:aunjai/constant/color_constant.dart';
 import 'package:aunjai/utils/helper.dart';
 import 'package:flutter/material.dart';
 
@@ -39,18 +38,18 @@ Widget textField(context,
                     fontFamily: 'THSarabunNew',
                     fontWeight: FontWeight.w500,
                     fontSize: 18.0,
-                    color: AppTheme.primary2,
+                    color: primary2,
                   ),
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
-                    focusColor: AppTheme.primary2,
+                    focusColor: primary2,
                     hintText: label,
                     border: InputBorder.none,
                     hintStyle: TextStyle(
                       fontFamily: "THSarabunNew",
                       fontWeight: FontWeight.w500,
                       fontSize: 18.0,
-                      color: labelColor ?? AppTheme.primary3,
+                      color: labelColor ?? primary3,
                     ),
                   ),
                   onEditingComplete: () {},

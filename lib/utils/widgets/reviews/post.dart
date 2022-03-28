@@ -1,7 +1,7 @@
 import 'dart:math';
 
+import 'package:aunjai/constant/style_constant.dart';
 import 'package:aunjai/utils/helper.dart';
-import 'package:aunjai/utils/text.common.dart';
 import 'package:aunjai/utils/widgets/expandableText.dart';
 import 'package:aunjai/utils/widgets/get_rating_star.dart';
 import 'package:aunjai/utils/widgets/horizontal.dart';
@@ -72,7 +72,7 @@ class _ReviewPostState extends State<ReviewPost> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      TextCommon.normalText(name,
+                      normalText(name,
                           fontSize: 18.0, fontWeight: FontWeight.w500),
                       ratingStar(score: rating),
                     ],
@@ -89,7 +89,7 @@ class _ReviewPostState extends State<ReviewPost> {
           Vertical(5),
           Text(
             keyMention,
-            style: TextCommon.customeStyle(
+            style: customStyle(
                 fontSize: 20.0, fontWeight: FontWeight.w400, height: 1.35),
           ),
           ExpandableText(content, trimLines: 3),
@@ -100,7 +100,7 @@ class _ReviewPostState extends State<ReviewPost> {
               children: getReviewPhoto(),
             ),
           ),
-          TextCommon.normalText(writeTime)
+          normalText(writeTime)
         ],
       ),
     );
@@ -115,7 +115,7 @@ class _ReviewPostState extends State<ReviewPost> {
           width: 90,
           height: 90,
           child: Center(
-            child: TextCommon.normalText("+${10 - i}", fontSize: 20.0),
+            child: normalText("+${10 - i}", fontSize: 20.0),
           ),
           color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
         ));

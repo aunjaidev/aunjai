@@ -3,7 +3,7 @@ import 'package:aunjai/model/review_post.model.dart';
 import 'package:aunjai/utils/helper.dart';
 import 'package:aunjai/utils/widgets/button.dart';
 import 'package:aunjai/utils/widgets/reviews/post.dart';
-import 'package:aunjai/views/attraction/page/review_page/review.dart';
+import 'package:aunjai/views/app_main/attraction/attraction_place/page/review_page/review.dart';
 import 'package:flutter/material.dart';
 
 class ReviewSectionWithMore extends StatefulWidget {

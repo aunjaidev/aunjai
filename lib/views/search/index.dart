@@ -1,6 +1,5 @@
-import 'package:aunjai/utils/app_theme.dart';
-import 'package:aunjai/utils/text.common.dart';
-import 'package:aunjai/utils/widgets/appbar.dart';
+import 'package:aunjai/constant/color_constant.dart';
+import 'package:aunjai/constant/style_constant.dart';
 import 'package:aunjai/utils/widgets/textfield.dart';
 import 'package:flutter/material.dart';
 
@@ -29,14 +28,14 @@ class _SearchPageState extends State<SearchPage> {
                   child: textField(context,
                       label: "Search Destination",
                       backgroundColor: Color.fromARGB(255, 249, 249, 250),
-                      labelColor: AppTheme.primary3),
+                      labelColor: primary3),
                 )),
             Flexible(
               flex: 2,
               child: InkWell(
                 onTap: () => Navigator.of(context).pop(),
                 child: Center(
-                    child: TextCommon.normalText("Cancel",
+                    child: normalText("Cancel",
                         fontSize: 18.0, fontWeight: FontWeight.w500)),
               ),
             )

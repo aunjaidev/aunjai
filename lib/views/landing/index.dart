@@ -1,4 +1,4 @@
-import 'package:aunjai/utils/text.common.dart';
+import 'package:aunjai/constant/style_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:aunjai/routes.dart';
 import 'package:aunjai/utils/helper.dart';
@@ -31,7 +31,7 @@ class _LandingPageState extends State<LandingPage> {
         child: Text(
           "TripGuy",
           style:
-              TextCommon.customeStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              customStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
       ),
     ));

@@ -1,12 +1,9 @@
-import 'package:aunjai/utils/app_theme.dart';
+import 'package:aunjai/constant/color_constant.dart';
+import 'package:aunjai/constant/style_constant.dart';
 import 'package:aunjai/utils/helper.dart';
-import 'package:aunjai/utils/text.common.dart';
 import 'package:aunjai/utils/widgets/appbar.dart';
-import 'package:aunjai/utils/widgets/button.dart';
-import 'package:aunjai/utils/widgets/decoration.dart';
-import 'package:aunjai/utils/widgets/horizontal.dart';
 import 'package:aunjai/utils/widgets/vertical.dart';
-import 'package:aunjai/views/profile/drawer/index.dart';
+import 'package:aunjai/views/app_main/profile/drawer/index.dart';
 import 'package:flutter/material.dart';
 
 class Profile extends StatefulWidget {
@@ -29,7 +26,7 @@ class ProfileState extends State<Profile> {
           leading: InkWell(
             child: const Icon(
               Icons.menu,
-              color: AppTheme.primary2,
+              color: primary2,
             ),
             onTap: () {
               _scaffoldKey.currentState!.openDrawer();
@@ -48,7 +45,7 @@ class ProfileState extends State<Profile> {
                 },
                 child: const Icon(
                   Icons.search,
-                  color: AppTheme.primary2,
+                  color: primary2,
                 ),
               ),
             )
@@ -96,7 +93,7 @@ class ProfileState extends State<Profile> {
           ),
           const Vertical(100),
           Center(
-            child: TextCommon.normalText("Nattapon Kongnariang",
+            child: normalText("Nattapon Kongnariang",
                 fontWeight: FontWeight.w600, fontSize: 30.0),
           ),
           Padding(
@@ -106,7 +103,7 @@ class ProfileState extends State<Profile> {
               child: Row(
                 children: [
                   button("Follow", () {}),
-                  button("Message", () {}, btnColor: AppTheme.primary3)
+                  button("Message", () {}, btnColor: primary3)
                 ],
               ),
             ),
@@ -140,14 +137,14 @@ class ProfileState extends State<Profile> {
       child: InkWell(
         onTap: func,
         child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 5.0, vertical: 15.0),
+          margin: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 15.0),
           width: double.infinity,
           height: 40.0,
           decoration: BoxDecoration(
-              color: btnColor ?? AppTheme.primary1,
-              borderRadius: BorderRadius.all(Radius.circular(5.0))),
+              color: btnColor ?? primary1,
+              borderRadius: const BorderRadius.all( Radius.circular(5.0))),
           child: Center(
-              child: TextCommon.normalText(label,
+              child: normalText(label,
                   fontSize: 18.0, fontWeight: FontWeight.w500)),
         ),
       ),
@@ -170,21 +167,21 @@ class ProfileState extends State<Profile> {
                 height: 50,
                 width: Helper.getScreenWidth(context) / 4,
                 child: Center(
-                  child: TextCommon.normalText(label,
+                  child: normalText(label,
                       fontSize: 18.0,
                       fontWeight: FontWeight.w400,
                       color: _currentPage == order
-                          ? AppTheme.primary2
-                          : AppTheme.primary3,
+                          ? primary2
+                          : primary3,
                       align: TextAlign.center),
                 ),
               ),
               _currentPage == order
                   ? const Divider(
-                      color: AppTheme.primary2,
+                      color: primary2,
                     )
                   : const Divider(
-                      color: AppTheme.primary3,
+                      color: primary3,
                     )
             ],
           ),

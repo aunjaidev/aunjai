@@ -1,24 +1,21 @@
-import 'package:aunjai/utils/app_theme.dart';
-import 'package:aunjai/utils/text.common.dart';
+import 'package:aunjai/constant/color_constant.dart';
+import 'package:aunjai/constant/style_constant.dart';
 import 'package:aunjai/utils/widgets/decoration.dart';
 import 'package:aunjai/utils/widgets/horizontal.dart';
 import 'package:aunjai/utils/widgets/media_carousel_horizontal.dart';
-import 'package:aunjai/utils/widgets/textfield.dart';
-import 'package:aunjai/utils/widgets/vertical.dart';
-import 'package:aunjai/views/home/widget/carouse_slide_widget.dart';
 import 'package:aunjai/views/search/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:aunjai/utils/helper.dart';
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class AttractionHome extends StatefulWidget {
+  const AttractionHome({Key? key}) : super(key: key);
 
   @override
-  _HomeState createState() => _HomeState();
+  _AttractionHomeState createState() => _AttractionHomeState();
 }
 
-class _HomeState extends State<Home> {
+class _AttractionHomeState extends State<AttractionHome> {
   int currentSlider = 0;
 
   @override
@@ -44,7 +41,7 @@ class _HomeState extends State<Home> {
                   ),
                   Positioned(
                       child: Container(
-                    color: AppTheme.primary2.withOpacity(0.25),
+                    color: primary2.withOpacity(0.25),
                     width: Helper.getScreenWidth(context),
                     height: 300.0,
                   )),
@@ -68,7 +65,7 @@ class _HomeState extends State<Home> {
                               color: Colors.white,
                             ),
                             const Horizontal(10.0),
-                            TextCommon.normalText("Roi-Et, Thailand ",
+                            normalText("Roi-Et, Thailand ",
                                 fontSize: 25.0,
                                 color: Colors.white,
                                 align: TextAlign.center,
@@ -96,7 +93,7 @@ class _HomeState extends State<Home> {
                                 ),
                                 child: const InkWell(
                                   child: Center(
-                                    child: const Icon(
+                                    child: Icon(
                                       Icons.arrow_back,
                                       size: 30.0,
                                       color: Colors.white,
@@ -133,17 +130,17 @@ class _HomeState extends State<Home> {
                                             width: 60,
                                             height: 60,
                                             child: Icon(Icons.search,
-                                                color: AppTheme.primary3),
+                                                color: primary3),
                                           ),
                                           Expanded(
                                             child: Container(
                                                 padding: const EdgeInsets.only(
                                                     right: 16),
-                                                child: TextCommon.normalText(
+                                                child: normalText(
                                                     "Search Destination",
                                                     fontSize: 18.0,
                                                     fontWeight: FontWeight.w400,
-                                                    color: AppTheme.primary3)),
+                                                    color: primary3)),
                                           ),
                                         ],
                                       ),
@@ -159,35 +156,38 @@ class _HomeState extends State<Home> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(
+              padding: const EdgeInsets.symmetric(
                   horizontal: Helper.layoutPadding,
                   vertical: Helper.layoutPadding),
               child: Container(
                 width: Helper.getScreenWidth(context),
-                padding: EdgeInsets.all(Helper.layoutPadding),
-                height: 100,
-                decoration:
-                    decoration(color: AppTheme.primary2, borderRadius: 10.0),
+                padding: const EdgeInsets.all(Helper.layoutPadding),
+                height: 70,
+                decoration: BoxDecoration(
+                  color: mFillColor,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: mBorderColor, width: 1),
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(
                       children: [
-                        Icon(
-                          Icons.local_activity,
-                          color: Colors.white,
-                          size: 30,
-                        ),
-                        Horizontal(10.0),
-                        TextCommon.normalText("Trip Me",
-                            color: Colors.white, fontSize: 22.0)
+                        Icon(Icons.manage_accounts),
+                        Padding(
+                            padding: EdgeInsets.only(left: 16),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                normalText('Trip planner',fontSize: 22.0),
+                                Helper.widgetSpacePadding,
+                               subtitle("manage trips for you")
+                              ],
+                            )),
                       ],
                     ),
-                    Icon(
-                      Icons.arrow_forward_ios,
-                      color: Colors.white,
-                      size: 30,
-                    )
+                    Icon(Icons.arrow_forward_ios,size: 20,)
                   ],
                 ),
               ),
@@ -197,7 +197,7 @@ class _HomeState extends State<Home> {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(Helper.layoutPadding),
-                  child: TextCommon.textContentTitle("City"),
+                  child: textContentTitle("City"),
                 ),
                 SizedBox(
                   width: Helper.getScreenWidth(context),
@@ -205,19 +205,40 @@ class _HomeState extends State<Home> {
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (ctx, index) {
-                      return Container(
-                        margin: EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Column(
-                          children: [
-                            Container(
-                              width: 100,
-                              height: 100,
-                              decoration: decoration(
-                                  color: Colors.black, borderRadius: 50.0),
+                      return Card(
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Container(
+                          height: 140,
+                          width: 120,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: mBorderColor, width: 1),
+                          ),
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.only(top: 8.0, bottom: 16),
+                            child: Column(
+                              children: <Widget>[
+                                Container(
+                                  width: 60,
+                                  height: 60,
+                                  margin: const EdgeInsets.symmetric(
+                                      vertical: 10.0),
+                                  decoration: BoxDecoration(
+                                    color: mFillColor,
+                                    borderRadius: BorderRadius.circular(50),
+                                    border: Border.all(
+                                        color: mBorderColor, width: 1),
+                                  ),
+                                ),
+                                const Text("Roi-et"),
+                                const Text("Thailand")
+                              ],
                             ),
-                            TextCommon.normalText("Bangkok",
-                                color: Colors.black, fontSize: 18.0)
-                          ],
+                          ),
                         ),
                       );
                     },
@@ -226,13 +247,13 @@ class _HomeState extends State<Home> {
                 )
               ],
             ),
-            MediaCarouselHorizontalWidget(),
+            const MediaCarouselHorizontalWidget(),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
                   padding: const EdgeInsets.all(Helper.layoutPadding),
-                  child: TextCommon.textContentTitle("Contents"),
+                  child: textContentTitle("Contents"),
                 ),
                 Wrap(
                   spacing: 2.0,
@@ -248,14 +269,14 @@ class _HomeState extends State<Home> {
     List<Widget> widgets = [];
     for (int i = 0; i < 20; i++) {
       widgets.add(Container(
-        width: Helper.getScreenWidth(context) / 2 -1,
-        padding: EdgeInsets.all(5.0),
+        width: Helper.getScreenWidth(context) / 2 - 1,
+        padding: const EdgeInsets.all(5.0),
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.all(2.0),
+              padding: const EdgeInsets.all(2.0),
               height: 150,
-              decoration: decoration(borderRadius: 5.0,color: Colors.amber),
+              decoration: decoration(borderRadius: 5.0, color: Colors.amber),
             )
           ],
         ),

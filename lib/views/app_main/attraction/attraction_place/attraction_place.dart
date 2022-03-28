@@ -1,16 +1,15 @@
-import 'package:aunjai/utils/app_theme.dart';
-import 'package:aunjai/utils/text.common.dart';
+import 'package:aunjai/constant/color_constant.dart';
+import 'package:aunjai/constant/style_constant.dart';
 import 'package:aunjai/utils/widgets/appbar.dart';
 import 'package:aunjai/utils/widgets/decoration.dart';
 import 'package:aunjai/utils/widgets/get_rating_star.dart';
 import 'package:aunjai/utils/widgets/horizontal.dart';
 import 'package:aunjai/utils/widgets/media_carousel_horizontal.dart';
-import 'package:aunjai/utils/widgets/progressbar.dart';
-import 'package:aunjai/utils/widgets/reviews/review_section.dart';
 import 'package:aunjai/utils/widgets/opentime_widget.dart';
 import 'package:aunjai/utils/widgets/vertical.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:aunjai/utils/helper.dart';
+import 'package:aunjai/views/app_main/attraction/attraction_place/widgets/about_section.dart';
+import 'package:aunjai/views/app_main/attraction/attraction_place/widgets/review_section.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
@@ -102,7 +101,8 @@ class _AttractionScreenState extends State<AttractionScreen> {
 
     _controller.addListener(() {
       _scrollPositionX = _controller.offset.toInt();
-      setState(() {});
+      print(_scrollPositionX);
+      // setState(() {});
     });
 
     super.initState();
@@ -227,7 +227,7 @@ class _AttractionScreenState extends State<AttractionScreen> {
                             color: Colors.white,
                           ),
                           const Horizontal(5.0),
-                          TextCommon.normalText(
+                          normalText(
                               '$_currentImage / ${_thumbnailPhoto.length}',
                               color: Colors.white,
                               fontSize: 16.0,
@@ -271,11 +271,11 @@ class _AttractionScreenState extends State<AttractionScreen> {
                     ],
                   ),
                 ),
-                content: Container(
+                content: SizedBox(
                   width: Helper.getScreenWidth(context),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [aboutSection()],
+                    children: const [AboutSection(), ReviewSection()],
                   ),
                 ))
           ],
@@ -297,21 +297,19 @@ class _AttractionScreenState extends State<AttractionScreen> {
                 height: 50,
                 width: Helper.getScreenWidth(context) / 4,
                 child: Center(
-                  child: TextCommon.normalText(label,
+                  child: normalText(label,
                       fontSize: 16.0,
                       fontWeight: FontWeight.w700,
-                      color: _indexSectionPage == order
-                          ? AppTheme.primary2
-                          : AppTheme.primary3,
+                      color: _indexSectionPage == order ? primary2 : primary3,
                       align: TextAlign.center),
                 ),
               ),
               _indexSectionPage == order
                   ? const Divider(
-                      color: AppTheme.primary2,
+                      color: primary2,
                       height: 0.5,
                     )
-                  : const Divider(color: AppTheme.primary3, height: 0.5)
+                  : const Divider(color: primary3, height: 0.5)
             ],
           ),
         ));
@@ -376,7 +374,7 @@ class _AttractionScreenState extends State<AttractionScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        TextCommon.textContentTitle(
+                        textContentTitle(
                           "Temple Of Dawn (Wat Arun)",
                         ),
                         const Vertical(10.0),
@@ -384,12 +382,12 @@ class _AttractionScreenState extends State<AttractionScreen> {
                           children: [
                             const Icon(Icons.location_pin,
                                 color: Colors.white, size: 16),
-                            TextCommon.normalText("Hanoi, Vietnam",
+                            normalText("Hanoi, Vietnam",
                                 color: Colors.white, fontSize: 16)
                           ],
                         ),
                         const Vertical(10.0),
-                        TextCommon.normalText(
+                        normalText(
                             " Points of Interest & Landmarks • Religious Sites",
                             color: Colors.white,
                             fontSize: 16),
@@ -400,7 +398,7 @@ class _AttractionScreenState extends State<AttractionScreen> {
                               score: 3.5,
                               size: 25.0,
                             ),
-                            TextCommon.normalText("3.5/5 1000 รีวิว",color: Colors.black)
+                            normalText("3.5/5 1000 รีวิว", color: Colors.black)
                           ],
                         ),
                       ],
@@ -415,7 +413,7 @@ class _AttractionScreenState extends State<AttractionScreen> {
                         decoration:
                             decoration(color: Colors.white, borderRadius: 5.0),
                         child: Center(
-                          child: TextCommon.normalText(
+                          child: normalText(
                             '$_currentImage / ${_thumbnailPhoto.length}',
                             fontSize: 18.0,
                           ),
@@ -432,7 +430,7 @@ class _AttractionScreenState extends State<AttractionScreen> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  TextCommon.textContentTitle("Popular mentions"),
+                  textContentTitle("Popular mentions"),
                   SizedBox(
                     height: 50,
                     width: Helper.getScreenWidth(context),
@@ -443,116 +441,6 @@ class _AttractionScreenState extends State<AttractionScreen> {
                   )
                 ],
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Vertical(15),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          TextCommon.textContentTitle("Reviews"),
-                          const Vertical(5.0),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Column(
-                                children: [
-                                  const Text(
-                                    "3.5",
-                                    style: TextStyle(fontSize: 50.0),
-                                  ),
-                                  const Vertical(5.0),
-                                  ratingStar(
-                                    score: 3.5,
-                                  ),
-                                  const Vertical(5.0),
-                                  SizedBox(
-                                      width: 100,
-                                      child: TextCommon.normalText(
-                                          "from 100000000",
-                                          align: TextAlign.center,
-                                          fontSize: 14))
-                                ],
-                              ),
-                              const Horizontal(15),
-                              Expanded(
-                                child: SizedBox(
-                                  width: Helper.getScreenWidth(context),
-                                  height: 100,
-                                  child: Row(
-                                    children: [
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          TextCommon.normalText("Excellent"),
-                                          TextCommon.normalText("VeryGood"),
-                                          TextCommon.normalText("Average"),
-                                          TextCommon.normalText("Poor"),
-                                          TextCommon.normalText("Terrible"),
-                                        ],
-                                      ),
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
-                                          children: [
-                                            getRatingProgressBar(0.1),
-                                            getRatingProgressBar(0.5),
-                                            getRatingProgressBar(0.2),
-                                            getRatingProgressBar(0.9),
-                                            getRatingProgressBar(1.0),
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
-                      const Vertical(30.0),
-                      Center(
-                        child: Column(
-                          children: [
-                            const CircleAvatar(),
-                            TextCommon.normalText("ให้คะแนนสำหรับสถานที่นี้"),
-                            RatingBar.builder(
-                              initialRating: 0,
-                              minRating: 0,
-                              direction: Axis.horizontal,
-                              allowHalfRating: true,
-                              itemCount: 5,
-                              unratedColor: Colors.black12,
-                              glow: false,
-                              itemPadding:
-                                  const EdgeInsets.symmetric(horizontal: 4.0),
-                              itemBuilder: (context, _) => const Icon(
-                                Icons.star,
-                                color: AppTheme.primary1,
-                              ),
-                              onRatingUpdate: (rating) {
-                                print(rating);
-                              },
-                            )
-                          ],
-                        ),
-                      ),
-                      const ReviewSectionWithMore()
-                    ],
-                  ),
-                ],
-              )
             ],
           ),
         ),
@@ -571,27 +459,6 @@ class _AttractionScreenState extends State<AttractionScreen> {
         ),
       );
 
-  getRatingProgressBar(percentage) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Flexible(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5.0),
-            child: progressbar(95),
-          ),
-          flex: 10,
-        ),
-        Flexible(
-            flex: 2,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5.0),
-              child: TextCommon.normalText("95"),
-            ))
-      ],
-    );
-  }
-
   List<Widget> getMentionWidgets() {
     List<Widget> widgets = [];
     for (var label in mentions) {
@@ -608,7 +475,7 @@ class _AttractionScreenState extends State<AttractionScreen> {
         ),
         child: Center(
           child: InkWell(
-            child: TextCommon.normalText(label),
+            child: normalText(label),
           ),
         ),
       ));
@@ -625,8 +492,7 @@ class _AttractionScreenState extends State<AttractionScreen> {
           width: Helper.getScreenWidth(context),
           height: 50,
           child: Container(
-            decoration:
-                decoration(color: AppTheme.primary1, borderRadius: 10.0),
+            decoration: decoration(color: primary1, borderRadius: 10.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -636,7 +502,7 @@ class _AttractionScreenState extends State<AttractionScreen> {
                   color: Colors.white,
                 ),
                 const Horizontal(5.0),
-                TextCommon.normalText(label, color: Colors.white)
+                normalText(label, color: Colors.white)
               ],
             ),
           ),
@@ -682,7 +548,7 @@ class _AttractionScreenState extends State<AttractionScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Vertical(5.0),
-          TextCommon.textContentTitle(
+          textContentTitle(
             "Temple Of Dawn (Wat Arun)",
           ),
           const Vertical(5.0),
@@ -695,20 +561,17 @@ class _AttractionScreenState extends State<AttractionScreen> {
                     score: 3.5,
                     size: 25.0,
                   ),
-                  TextCommon.normalText("1000 รีวิว",color: Colors.black)
+                  normalText("1000 รีวิว", color: Colors.black)
                 ],
               ),
-              TextCommon.normalText(
-                  "โปราณสถาน",
+              normalText("โปราณสถาน",
                   color: Colors.black,
                   fontWeight: FontWeight.normal,
                   fontSize: 15),
             ],
           ),
-
           const Vertical(10.0),
-
-          Container(
+          SizedBox(
             width: Helper.getScreenWidth(context),
             height: 150,
             child: Row(
@@ -718,11 +581,16 @@ class _AttractionScreenState extends State<AttractionScreen> {
                   height: 150,
                   color: Colors.red,
                 ),
-                Flexible(child: SizedBox(width: double.infinity,height: double.infinity,child:  TextCommon.normalText("2 Sanamchai Road Grand Palace Subdistrict, Pranakorn District, Bangkok 10200"),))
+                Flexible(
+                    child: SizedBox(
+                  width: double.infinity,
+                  height: double.infinity,
+                  child: normalText(
+                      "2 Sanamchai Road Grand Palace Subdistrict, Pranakorn District, Bangkok 10200"),
+                ))
               ],
             ),
           ),
-
           const Vertical(5.0),
           const OpenTimeWidget(),
           const Vertical(5.0),

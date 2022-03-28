@@ -1,7 +1,8 @@
+import 'package:aunjai/constant/style_constant.dart';
 import 'package:aunjai/routes.dart';
 import 'package:aunjai/utils/helper.dart';
-import 'package:aunjai/utils/text.common.dart';
 import 'package:aunjai/utils/widgets/get_rating_star.dart';
+import 'package:aunjai/utils/widgets/horizontal.dart';
 import 'package:flutter/material.dart';
 
 class MediaCarouselHorizontalWidget extends StatelessWidget {
@@ -24,14 +25,15 @@ class MediaCarouselHorizontalWidget extends StatelessWidget {
         children: [
           Container(
             width: Helper.getScreenWidth(context),
-            margin: const EdgeInsets.only(top: 20, bottom: 10,right: 10,left: 10),
+            margin:
+                const EdgeInsets.only(top: 20, bottom: 10, right: 10, left: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
                   'Popular Destinations',
-                  style: TextCommon.customeStyle(
+                  style: customStyle(
                       fontSize: 21.0,
                       fontWeight: FontWeight.w400,
                       color: Colors.black),
@@ -44,7 +46,7 @@ class MediaCarouselHorizontalWidget extends StatelessWidget {
                       children: [
                         Text(
                           "show all",
-                          style: TextCommon.customeStyle(
+                          style: customStyle(
                               fontSize: 18.0,
                               fontWeight: FontWeight.w300,
                               color: Colors.black),
@@ -60,7 +62,7 @@ class MediaCarouselHorizontalWidget extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(
+          Container(
             width: Helper.getScreenWidth(context),
             height: 260,
             child: ListView(
@@ -83,20 +85,19 @@ class MediaCarouselHorizontalWidget extends StatelessWidget {
   Widget _card(context) {
     return InkWell(
       onTap: () {
-        Map<String, String> args = {"id": "p001", "type": "attraction"};
+        Map<String, String> args = {"id": "p001", "type": "attraction_place"};
         RouteCommon.handleNavigationRoute(
             context: context, routeName: "/AttractionScreen", arguments: args);
       },
       child: Container(
         margin: const EdgeInsets.only(left: 10.0),
         width: 220,
-        height: 250,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
               width: double.infinity,
-              height: 150,
+              height: 124,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
                 child: Image.network(
@@ -112,15 +113,20 @@ class MediaCarouselHorizontalWidget extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 1.5),
-                    child:
-                        TextCommon.textContentTitle(getPlaceMock()["title"]),
+                    child: textContentTitle(getPlaceMock()["title"]),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 1.5),
-                    child: TextCommon.normalText(
-                        getPlaceMock()["type"],fontSize: 14.0),
+                    child: normalText(getPlaceMock()["type"], fontSize: 14.0),
                   ),
-                  ratingStar(score: getPlaceMock()["rating"]),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ratingStar(size: 14,score: getPlaceMock()["rating"]),
+                      const Horizontal(5.0),
+                      subtitle(" from 1000 reviews")
+                    ],
+                  )
                 ],
               ),
             )

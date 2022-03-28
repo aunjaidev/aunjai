@@ -1,10 +1,13 @@
 import 'dart:convert';
 
+import 'package:aunjai/utils/widgets/vertical.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class Helper {
-  static const double layoutPadding = 15.0;
+  static const double layoutPadding = 10.0;
+  static  Vertical widgetSpacePadding = const Vertical(5.0);
+
 
   static double getScreenWidth(BuildContext context) {
     return MediaQuery.of(context).size.width;

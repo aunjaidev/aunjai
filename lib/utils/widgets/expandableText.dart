@@ -1,12 +1,13 @@
-import 'package:aunjai/utils/text.common.dart';
+import 'package:aunjai/constant/style_constant.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
 class ExpandableText extends StatefulWidget {
   const ExpandableText(
-      this.text, {
-        Key? key,
-        required this.trimLines,
-      }) : super(key: key);
+    this.text, {
+    Key? key,
+    required this.trimLines,
+  }) : super(key: key);
 
   final String text;
   final int trimLines;
@@ -64,13 +65,13 @@ class ExpandableTextState extends State<ExpandableText> {
         if (textPainter.didExceedMaxLines) {
           textSpan = TextSpan(
             text: _readMore ? widget.text.substring(0, endIndex) : widget.text,
-            style: TextCommon.customeStyle(
+            style: customStyle(
                 fontSize: 16.0, fontWeight: FontWeight.w200, height: 1.35),
             children: <TextSpan>[link],
           );
         } else {
           textSpan = TextSpan(
-            style: TextCommon.customeStyle(
+            style: customStyle(
               fontSize: 16.0,
             ),
             text: widget.text,
@@ -87,4 +88,3 @@ class ExpandableTextState extends State<ExpandableText> {
     return result;
   }
 }
-

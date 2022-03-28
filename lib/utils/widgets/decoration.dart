@@ -1,8 +1,8 @@
-import 'package:aunjai/utils/app_theme.dart';
+import 'package:aunjai/constant/color_constant.dart';
 import 'package:flutter/material.dart';
 
 Decoration decoration({Color? color, borderRadius}) => BoxDecoration(
-        color: color ?? AppTheme.primary1,
+        color: color ?? primary1,
         borderRadius: BorderRadius.circular(borderRadius ?? 15),
         border: Border.all(
           color: Colors.transparent,

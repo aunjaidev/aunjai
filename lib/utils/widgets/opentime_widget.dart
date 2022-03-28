@@ -1,4 +1,4 @@
-import 'package:aunjai/utils/text.common.dart';
+import 'package:aunjai/constant/style_constant.dart';
 import 'package:flutter/material.dart';
 
 class OpenTimeWidget extends StatefulWidget {
@@ -27,10 +27,10 @@ class _OpenTimeWidgetState extends State<OpenTimeWidget> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      TextCommon.textContentTitle("OpenTime"),
+                      textContentTitle("OpenTime"),
                       Row(
                         children: [
-                          TextCommon.normalText("Sunday 08.00-19.00",
+                          normalText("Sunday 08.00-19.00",
                               color: Colors.green,
                               fontSize: 16.0,
                               fontWeight: FontWeight.w400),
@@ -78,8 +78,8 @@ class _OpenTimeWidgetState extends State<OpenTimeWidget> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        TextCommon.normalText(day),
-        TextCommon.normalText(time),
+        normalText(day),
+        normalText(time),
       ],
     );
   }

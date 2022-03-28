@@ -1,4 +1,4 @@
-import 'package:aunjai/utils/app_theme.dart';
+import 'package:aunjai/constant/color_constant.dart';
 import 'package:flutter/material.dart';
 
 Widget ratingStar({double? size, required double score}) {
@@ -7,7 +7,7 @@ Widget ratingStar({double? size, required double score}) {
     widgets.add(Icon(
       Icons.star,
       size: size ?? 18.0,
-      color: AppTheme.primary2,
+      color: primary2,
     ));
   }
 
@@ -15,7 +15,7 @@ Widget ratingStar({double? size, required double score}) {
     widgets.add(Icon(
       Icons.star_half,
       size: size ?? 18.0,
-      color: AppTheme.primary2,
+      color: primary2,
     ));
   }
 
@@ -23,7 +23,7 @@ Widget ratingStar({double? size, required double score}) {
     widgets.add(Icon(
       Icons.star_border,
       size: size ?? 18.0,
-      color: AppTheme.primary2,
+      color: primary2,
     ));
   }
   return Row(

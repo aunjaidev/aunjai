@@ -1,5 +1,5 @@
+import 'package:aunjai/constant/style_constant.dart';
 import 'package:aunjai/utils/helper.dart';
-import 'package:aunjai/utils/text.common.dart';
 import 'package:flutter/material.dart';
 
 Widget button(context,
@@ -17,7 +17,7 @@ Widget button(context,
           child: Center(
               child: Text(
                 label,
-                style: TextCommon.customeStyle(fontSize: 18.0),
+                style: customStyle(fontSize: 18.0),
               ))),
     ),
   );
