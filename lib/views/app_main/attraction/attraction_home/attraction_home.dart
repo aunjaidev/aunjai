@@ -1,5 +1,7 @@
 import 'package:aunjai/constant/color_constant.dart';
 import 'package:aunjai/constant/style_constant.dart';
+import 'package:aunjai/routes.dart';
+import 'package:aunjai/utils/widgets/card_custom/card_horizontal_slide.dart';
 import 'package:aunjai/utils/widgets/decoration.dart';
 import 'package:aunjai/utils/widgets/horizontal.dart';
 import 'package:aunjai/utils/widgets/media_carousel_horizontal.dart';
@@ -51,26 +53,30 @@ class _AttractionHomeState extends State<AttractionHome> {
                     right: 0,
                     child: Align(
                       alignment: Alignment.bottomCenter,
-                      child: Container(
-                        width: 250,
-                        padding: const EdgeInsets.all(10.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.0),
-                          color: Colors.black.withOpacity(0.5),
-                        ),
-                        child: Row(
-                          children: [
-                            const Icon(
-                              Icons.near_me,
-                              color: Colors.white,
-                            ),
-                            const Horizontal(10.0),
-                            normalText("Roi-Et, Thailand ",
-                                fontSize: 25.0,
+                      child: InkWell(
+                        onTap: (){
+                          RouteCommon.handleNavigationRoute(context: context, routeName: "/attractionCity");
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(10.0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            color: Colors.black.withOpacity(0.5),
+                          ),
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.near_me,
                                 color: Colors.white,
-                                align: TextAlign.center,
-                                fontWeight: FontWeight.w400),
-                          ],
+                              ),
+                              const Horizontal(10.0),
+                              normalText("Roi-Et, Thailand ",
+                                  fontSize: 25.0,
+                                  color: Colors.white,
+                                  align: TextAlign.center,
+                                  fontWeight: FontWeight.w400),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -195,69 +201,11 @@ class _AttractionHomeState extends State<AttractionHome> {
                 ),
               ),
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(Helper.layoutPadding),
-                  child: textContentTitle("City"),
-                ),
-                SizedBox(
-                  width: Helper.getScreenWidth(context),
-                  height: 140.0,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (ctx, index) {
-                      return Card(
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Container(
-                          height: 140,
-                          width: 120,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(color: mBorderColor, width: 1),
-                          ),
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.only(top: 8.0, bottom: 16),
-                            child: Column(
-                              children: <Widget>[
-                                Container(
-                                  width: 60,
-                                  height: 60,
-                                  margin: const EdgeInsets.symmetric(
-                                      vertical: 10.0),
-                                  decoration: BoxDecoration(
-                                    color: mFillColor,
-                                    borderRadius: BorderRadius.circular(50),
-                                    border: Border.all(
-                                        color: mBorderColor, width: 1),
-                                  ),
-                                ),
-                                const Text("Roi-et"),
-                                const Text("Thailand")
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                    itemCount: 10,
-                  ),
-                )
-              ],
-            ),
             const MediaCarouselHorizontalWidget(),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(Helper.layoutPadding),
-                  child: textContentTitle("Contents"),
-                ),
+                textContentTitle("Contents"),
                 Wrap(
                   spacing: 2.0,
                   children: getContents(),

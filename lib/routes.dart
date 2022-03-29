@@ -1,9 +1,10 @@
 import 'package:aunjai/views/app_main/app.main.dart';
+import 'package:aunjai/views/app_main/attraction/attraction_city/attractioncity.dart';
+import 'package:aunjai/views/app_main/attraction/attraction_tripplanner/trip_planner.dart';
 import 'package:flutter/material.dart';
 import 'package:aunjai/views/landing/index.dart';
 import 'package:aunjai/views/signin/signin.dart';
 import 'package:aunjai/views/signup/signup.dart';
-
 
 class RouteCommon {
   RouteCommon._();
@@ -13,6 +14,8 @@ class RouteCommon {
     "/AppHomeNavigation": (ctx) => const AppMain(),
     "/SignupScreen": (ctx) => const SignupScreen(),
     "/SigninScreen": (ctx) => const SigninScreen(),
+    "/tripPlanner": (ctx) => TripPlanner(),
+    "/attractionCity": (ctx) => AttractionCity()
   };
 
   static Future? handleNavigationRoute(
@@ -26,5 +29,4 @@ class RouteCommon {
     }
     return null;
   }
-
 }

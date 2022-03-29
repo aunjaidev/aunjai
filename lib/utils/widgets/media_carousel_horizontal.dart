@@ -64,7 +64,7 @@ class MediaCarouselHorizontalWidget extends StatelessWidget {
           ),
           Container(
             width: Helper.getScreenWidth(context),
-            height: 260,
+            height: 200,
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [

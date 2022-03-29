@@ -68,56 +68,6 @@ class _AppMainState extends State<AppMain> {
               ),
             ),
 
-            // Popular Destination Section
-            Padding(
-              padding: const EdgeInsets.only(left: 16, top: 24, bottom: 12),
-              child: textContentTitle('Popular Destinations!'),
-            ),
-            SizedBox(
-              child: ListView.builder(
-                itemCount: 10,
-                padding: const EdgeInsets.only(left: 16, right: 16),
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  return Card(
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Container(
-                      height: 150,
-                      width: 130,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: mBorderColor, width: 1),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 5.0, bottom: 5),
-                        child: Column(
-                          children: <Widget>[
-                            Container(
-                              width: 60,
-                              height: 60,
-                              margin: const EdgeInsets.symmetric(vertical: 10.0),
-                              decoration: BoxDecoration(
-                                color: mFillColor,
-                                borderRadius: BorderRadius.circular(50),
-                                border:
-                                    Border.all(color: mBorderColor, width: 1),
-                              ),
-                            ),
-                            const Text("Roi-et"),
-                            const Text("Thailand")
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-
-
             const Vertical(10.0),
           ],
         ),
