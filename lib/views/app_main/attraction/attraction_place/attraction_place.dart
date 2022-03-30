@@ -15,14 +15,14 @@ import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:sticky_headers/sticky_headers.dart';
 
-class AttractionScreen extends StatefulWidget {
-  const AttractionScreen({Key? key}) : super(key: key);
+class AttractionPlaceScreen extends StatefulWidget {
+  const AttractionPlaceScreen({Key? key}) : super(key: key);
 
   @override
-  State<AttractionScreen> createState() => _AttractionScreenState();
+  State<AttractionPlaceScreen> createState() => _AttractionPlaceScreenState();
 }
 
-class _AttractionScreenState extends State<AttractionScreen> {
+class _AttractionPlaceScreenState extends State<AttractionPlaceScreen> {
   late PhotoViewController photoViewController;
   late PageController pageController;
   final ScrollController _controller = ScrollController();

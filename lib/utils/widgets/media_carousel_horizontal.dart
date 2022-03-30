@@ -64,7 +64,7 @@ class MediaCarouselHorizontalWidget extends StatelessWidget {
           ),
           Container(
             width: Helper.getScreenWidth(context),
-            height: 200,
+            height: 220,
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
@@ -87,7 +87,7 @@ class MediaCarouselHorizontalWidget extends StatelessWidget {
       onTap: () {
         Map<String, String> args = {"id": "p001", "type": "attraction_place"};
         RouteCommon.handleNavigationRoute(
-            context: context, routeName: "/AttractionScreen", arguments: args);
+            context: context, routeName: "/screen/attraction_place", arguments: args);
       },
       child: Container(
         margin: const EdgeInsets.only(left: 10.0),
