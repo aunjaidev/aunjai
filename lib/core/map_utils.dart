@@ -15,7 +15,7 @@ class MapUtils {
     }
   }
 
-  static Future<Position> getCurrentLocaltion() async {
+  static Future<Position> getCurrentLocation() async {
     bool serviceEnabled;
     LocationPermission permission;
 
