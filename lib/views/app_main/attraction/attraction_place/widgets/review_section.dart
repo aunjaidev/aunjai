@@ -10,7 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class ReviewSection extends StatelessWidget {
-  const ReviewSection({Key? key}) : super(key: key);
+  final GlobalKey reviewKey;
+  const ReviewSection({Key? key, required this.reviewKey}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class ReviewSection extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  textContentTitle("Reviews"),
+                  textContentTitle("Travel Reviews"),
                   const Vertical(5.0),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -46,47 +47,50 @@ class ReviewSection extends StatelessWidget {
                           SizedBox(
                               width: 100,
                               child: normalText(
-                                  "from 100000000",
+                                  "100000 Reviews",
                                   align: TextAlign.center,
                                   fontSize: 14))
                         ],
                       ),
-                      const Horizontal(15),
+                      const Horizontal(10),
                       Expanded(
-                        child: SizedBox(
-                          width: Helper.getScreenWidth(context),
-                          height: 100,
-                          child: Row(
-                            children: [
-                              Column(
-                                crossAxisAlignment:
-                                CrossAxisAlignment.end,
-                                mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
-                                children: [
-                                  normalText("Excellent"),
-                                  normalText("VeryGood"),
-                                  normalText("Average"),
-                                  normalText("Poor"),
-                                  normalText("Terrible"),
-                                ],
-                              ),
-                              Expanded(
-                                child: Column(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                          child: SizedBox(
+                            width: Helper.getScreenWidth(context),
+                            height: 100,
+                            child: Row(
+                              children: [
+                                Column(
                                   crossAxisAlignment:
-                                  CrossAxisAlignment.center,
+                                  CrossAxisAlignment.start,
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceAround,
+                                  MainAxisAlignment.spaceBetween,
                                   children: [
-                                    getRatingProgressBar(0.1),
-                                    getRatingProgressBar(0.5),
-                                    getRatingProgressBar(0.2),
-                                    getRatingProgressBar(0.9),
-                                    getRatingProgressBar(1.0),
+                                    normalText("Excellent"),
+                                    normalText("VeryGood"),
+                                    normalText("Average"),
+                                    normalText("Poor"),
+                                    normalText("Terrible"),
                                   ],
                                 ),
-                              )
-                            ],
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.center,
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                    children: [
+                                      getRatingProgressBar(0.12),
+                                      getRatingProgressBar(0.55),
+                                      getRatingProgressBar(0.23),
+                                      getRatingProgressBar(0.95),
+                                      getRatingProgressBar(1.0),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       )
@@ -95,6 +99,8 @@ class ReviewSection extends StatelessWidget {
                 ],
               ),
               const Vertical(30.0),
+              normalText("Read Reviews That Mention:"),
+
               Center(
                 child: Column(
                   children: [
@@ -129,24 +135,13 @@ class ReviewSection extends StatelessWidget {
     );
   }
 
-  getRatingProgressBar(percentage) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Flexible(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5.0),
-            child: progressbar(95),
-          ),
-          flex: 10,
-        ),
-        Flexible(
-            flex: 2,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5.0),
-              child: normalText("95"),
-            ))
-      ],
+  getRatingProgressBar(double percentage) {
+    return Flexible(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 5.0),
+        child: progressbar(percentage),
+      ),
+      flex: 10,
     );
   }
 }

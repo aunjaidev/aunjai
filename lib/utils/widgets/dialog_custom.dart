@@ -45,14 +45,14 @@ Widget _weatherTemplate(context) {
           child: ListView(
             scrollDirection: Axis.horizontal,
             children: [
-              CardCustom(),
-              CardCustom(),
-              CardCustom(),
-              CardCustom(),
-              CardCustom(),
-              CardCustom(),
-              CardCustom(),
-              CardCustom(),
+              CardCustom(icon: Icon(Icons.map)),
+              CardCustom(icon: Icon(Icons.map)),
+              CardCustom(icon: Icon(Icons.map)),
+              CardCustom(icon: Icon(Icons.map)),
+              CardCustom(icon: Icon(Icons.map)),
+              CardCustom(icon: Icon(Icons.map)),
+              CardCustom(icon: Icon(Icons.map)),
+              CardCustom(icon: Icon(Icons.map)),
             ],
           ),
         )

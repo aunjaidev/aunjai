@@ -22,7 +22,7 @@ class ProfileState extends State<Profile> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: appBar(context,
-          backColor: Colors.white,
+          backgroundColor: Colors.white,
           leading: InkWell(
             child: const Icon(
               Icons.menu,

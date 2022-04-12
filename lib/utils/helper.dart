@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:aunjai/utils/widgets/vertical.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class Helper {
   static const double layoutPadding = 10.0;
@@ -34,4 +35,12 @@ class Helper {
         path,
         width: width,
       );
+
+  static Future<BitmapDescriptor>  bitmapDescriptorReadAsset(String path)  {
+   return BitmapDescriptor.fromAssetImage(
+        const ImageConfiguration(
+          size: Size(24, 24),
+        ),
+       path);
+  }
 }

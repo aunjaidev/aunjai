@@ -6,7 +6,9 @@ import 'package:aunjai/utils/widgets/horizontal.dart';
 import 'package:flutter/material.dart';
 
 class MediaCarouselHorizontalWidget extends StatelessWidget {
-  const MediaCarouselHorizontalWidget({Key? key}) : super(key: key);
+  const MediaCarouselHorizontalWidget({Key? key,required this.label}) : super(key: key);
+
+  final String label;
 
   Map<String, dynamic> getPlaceMock() => {
         "id": "p001",
@@ -32,7 +34,7 @@ class MediaCarouselHorizontalWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  'Popular Destinations',
+                  label,
                   style: customStyle(
                       fontSize: 21.0,
                       fontWeight: FontWeight.w400,
@@ -62,7 +64,7 @@ class MediaCarouselHorizontalWidget extends StatelessWidget {
               ],
             ),
           ),
-          Container(
+          SizedBox(
             width: Helper.getScreenWidth(context),
             height: 220,
             child: ListView(

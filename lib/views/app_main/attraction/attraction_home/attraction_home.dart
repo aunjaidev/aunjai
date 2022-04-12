@@ -201,7 +201,7 @@ class _AttractionHomeState extends State<AttractionHome> {
                 ),
               ),
             ),
-            const MediaCarouselHorizontalWidget(),
+            const MediaCarouselHorizontalWidget(label: "สถานที่ยอดนิยม ใน ร้อยเอ็ด"),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

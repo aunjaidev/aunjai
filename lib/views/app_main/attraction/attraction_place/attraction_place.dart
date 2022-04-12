@@ -1,5 +1,6 @@
 import 'package:aunjai/constant/color_constant.dart';
 import 'package:aunjai/constant/style_constant.dart';
+import 'package:aunjai/core/map_utils.dart';
 import 'package:aunjai/utils/widgets/appbar.dart';
 import 'package:aunjai/utils/widgets/decoration.dart';
 import 'package:aunjai/utils/widgets/get_rating_star.dart';
@@ -13,7 +14,6 @@ import 'package:aunjai/views/app_main/attraction/attraction_place/widgets/review
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
-import 'package:sticky_headers/sticky_headers.dart';
 
 class AttractionPlaceScreen extends StatefulWidget {
   const AttractionPlaceScreen({Key? key}) : super(key: key);
@@ -27,9 +27,9 @@ class _AttractionPlaceScreenState extends State<AttractionPlaceScreen> {
   late PageController pageController;
   final ScrollController _controller = ScrollController();
 
-  final aboutKey = GlobalKey();
+  final GlobalKey aboutKey = GlobalKey(debugLabel: "aboutKey");
+  final GlobalKey reviewKey = GlobalKey(debugLabel: "reviewKey");
 
-  late int _indexSectionPage = 0;
   late int _currentImage = 1;
   late int _scrollPositionX = 0;
 
@@ -182,7 +182,7 @@ class _AttractionPlaceScreenState extends State<AttractionPlaceScreen> {
                         ),
                         child: const InkWell(
                           child: Center(
-                            child: const Icon(
+                            child: Icon(
                               Icons.arrow_back,
                               size: 30.0,
                               color: Colors.white,
@@ -237,227 +237,28 @@ class _AttractionPlaceScreenState extends State<AttractionPlaceScreen> {
                     ))
               ],
             ),
-            StickyHeader(
-                header: Container(
-                  margin: EdgeInsets.only(top: _scrollPositionX > 290 ? 30 : 0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      buttonSwapPage("ภาพรวม", 0, () {
-                        // _controller.position.ensureVisible(
-                        //     aboutKey.currentContext.findRenderObject(),
-                        //     duration: Duration(seconds: 1),
-                        //     curve: Curves.easeOut);
-
-                        setState(() {
-                          _indexSectionPage = 0;
-                        });
-                      }),
-                      buttonSwapPage("รีวิว", 1, () {
-                        setState(() {
-                          _indexSectionPage = 1;
-                        });
-                      }),
-                      buttonSwapPage("Reviews", 2, () {
-                        setState(() {
-                          _indexSectionPage = 2;
-                        });
-                      }),
-                      buttonSwapPage("Reviews", 3, () {
-                        setState(() {
-                          _indexSectionPage = 3;
-                        });
-                      }),
-                    ],
+            SizedBox(
+              width: Helper.getScreenWidth(context),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AboutSection(aboutKey: aboutKey),
+                  ReviewSection(reviewKey: reviewKey),
+                  MediaCarouselHorizontalWidget(
+                    label: "บทความแนะนำ",
                   ),
-                ),
-                content: SizedBox(
-                  width: Helper.getScreenWidth(context),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [AboutSection(), ReviewSection()],
-                  ),
-                ))
+                  MediaCarouselHorizontalWidget(
+                    label: "สถานที่ท่องเที่ยวในบริเวณใกล้เคียง ",
+                  )
+                ],
+              ),
+            )
           ],
         ),
       ),
     );
   }
 
-  buttonSwapPage(label, order, func) {
-    return Flexible(
-        flex: 5,
-        child: InkWell(
-          highlightColor: Colors.transparent,
-          splashColor: Colors.transparent,
-          onTap: func,
-          child: Column(
-            children: [
-              SizedBox(
-                height: 50,
-                width: Helper.getScreenWidth(context) / 4,
-                child: Center(
-                  child: normalText(label,
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w700,
-                      color: _indexSectionPage == order ? primary2 : primary3,
-                      align: TextAlign.center),
-                ),
-              ),
-              _indexSectionPage == order
-                  ? const Divider(
-                      color: primary2,
-                      height: 0.5,
-                    )
-                  : const Divider(color: primary3, height: 0.5)
-            ],
-          ),
-        ));
-  }
-
-  oldVersionn() => Scaffold(
-        appBar: appBar(context, actions: []),
-        body: Container(
-          color: Colors.white,
-          width: Helper.getScreenWidth(context),
-          height: Helper.getScreenHeight(context),
-          child: ListView(
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            physics: const ClampingScrollPhysics(),
-            children: [
-              Stack(
-                children: [
-                  SizedBox(
-                      width: Helper.getScreenWidth(context),
-                      height: 280,
-                      child: PhotoViewGallery.builder(
-                        pageController: pageController,
-                        onPageChanged: (p) => setState(() {
-                          _currentImage = p + 1;
-                        }),
-                        scrollPhysics: const ClampingScrollPhysics(),
-                        itemCount: _thumbnailPhoto.length,
-                        builder: (ctx, index) {
-                          return PhotoViewGalleryPageOptions.customChild(
-                            controller: photoViewController,
-                            child: InkWell(
-                              onTap: () {},
-                              child: Stack(
-                                children: [
-                                  Container(
-                                    width: Helper.getScreenWidth(context),
-                                    height: 280,
-                                    decoration: BoxDecoration(
-                                        // color: Colors.black.withOpacity(0.35),
-                                        // colorBlendMode: BlendMode.colorBurn
-                                        image: DecorationImage(
-                                            fit: BoxFit.fill,
-                                            image: NetworkImage(
-                                                _thumbnailPhoto[index]))),
-                                  ),
-                                  Container(
-                                    width: Helper.getScreenWidth(context),
-                                    height: 300,
-                                    decoration: BoxDecoration(
-                                        color: Colors.black.withOpacity(0.5)),
-                                  )
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      )),
-                  Positioned(
-                    bottom: 25,
-                    left: 25,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        textContentTitle(
-                          "Temple Of Dawn (Wat Arun)",
-                        ),
-                        const Vertical(10.0),
-                        Row(
-                          children: [
-                            const Icon(Icons.location_pin,
-                                color: Colors.white, size: 16),
-                            normalText("Hanoi, Vietnam",
-                                color: Colors.white, fontSize: 16)
-                          ],
-                        ),
-                        const Vertical(10.0),
-                        normalText(
-                            " Points of Interest & Landmarks • Religious Sites",
-                            color: Colors.white,
-                            fontSize: 16),
-                        const Vertical(10.0),
-                        Row(
-                          children: [
-                            ratingStar(
-                              score: 3.5,
-                              size: 25.0,
-                            ),
-                            normalText("3.5/5 1000 รีวิว", color: Colors.black)
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Positioned(
-                      top: 20,
-                      right: 10,
-                      child: Container(
-                        width: 50,
-                        height: 25,
-                        decoration:
-                            decoration(color: Colors.white, borderRadius: 5.0),
-                        child: Center(
-                          child: normalText(
-                            '$_currentImage / ${_thumbnailPhoto.length}',
-                            fontSize: 18.0,
-                          ),
-                        ),
-                      ))
-                ],
-              ),
-              const Padding(
-                padding: EdgeInsets.only(
-                  left: 10,
-                ),
-                child: MediaCarouselHorizontalWidget(),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  textContentTitle("Popular mentions"),
-                  SizedBox(
-                    height: 50,
-                    width: Helper.getScreenWidth(context),
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: getMentionWidgets(),
-                    ),
-                  )
-                ],
-              ),
-            ],
-          ),
-        ),
-        bottomSheet: Container(
-          width: Helper.getScreenWidth(context),
-          height: 60,
-          color: Colors.transparent,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              getActivitiesButton(icon: Icons.star_rate, label: "Add Photo"),
-              getActivitiesButton(icon: Icons.reviews, label: "Review"),
-              getActivitiesButton(icon: Icons.my_location, label: "Check-In")
-            ],
-          ),
-        ),
-      );
 
   List<Widget> getMentionWidgets() {
     List<Widget> widgets = [];
@@ -511,91 +312,4 @@ class _AttractionPlaceScreenState extends State<AttractionPlaceScreen> {
     );
   }
 
-  getLocationMap() {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 10.0),
-      decoration: decoration(color: Colors.cyan, borderRadius: 10.0),
-      width: Helper.getScreenWidth(context),
-      height: 250,
-      child: Stack(
-        children: [
-          Positioned.fill(
-              child: Align(
-            alignment: Alignment.center,
-            child: Container(
-              width: 100,
-              height: 50,
-              decoration: decoration(
-                  color: Colors.black.withOpacity(0.2), borderRadius: 5.0),
-              child: Center(
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const [Icon(Icons.fullscreen), Text("ดูแผนที่")]),
-              ),
-            ),
-          ))
-        ],
-      ),
-    );
-  }
-
-  aboutSection() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
-      child: Column(
-        key: aboutKey,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Vertical(5.0),
-          textContentTitle(
-            "Temple Of Dawn (Wat Arun)",
-          ),
-          const Vertical(5.0),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  ratingStar(
-                    score: 3.5,
-                    size: 25.0,
-                  ),
-                  normalText("1000 รีวิว", color: Colors.black)
-                ],
-              ),
-              normalText("โปราณสถาน",
-                  color: Colors.black,
-                  fontWeight: FontWeight.normal,
-                  fontSize: 15),
-            ],
-          ),
-          const Vertical(10.0),
-          SizedBox(
-            width: Helper.getScreenWidth(context),
-            height: 150,
-            child: Row(
-              children: [
-                Container(
-                  width: 150,
-                  height: 150,
-                  color: Colors.red,
-                ),
-                Flexible(
-                    child: SizedBox(
-                  width: double.infinity,
-                  height: double.infinity,
-                  child: normalText(
-                      "2 Sanamchai Road Grand Palace Subdistrict, Pranakorn District, Bangkok 10200"),
-                ))
-              ],
-            ),
-          ),
-          const Vertical(5.0),
-          const OpenTimeWidget(),
-          const Vertical(5.0),
-        ],
-      ),
-    );
-  }
 }

@@ -5,11 +5,10 @@ class MapUtils {
   MapUtils._();
 
   static Future<void> openGoogleMapDeplinkApp(
-      double latitude, double longitude) async {
-    String googleUrl =
-        'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
-    if (await canLaunch(googleUrl)) {
-      await launch(googleUrl);
+  {required double latitude, required double longitude}) async {
+    var mapSchema = 'geo:$latitude,$longitude';
+    if (await canLaunch(mapSchema)) {
+      await launch(mapSchema);
     } else {
       throw 'Could not open the map.';
     }

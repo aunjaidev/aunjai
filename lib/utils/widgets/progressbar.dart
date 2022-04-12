@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 Widget progressbar(double value) {
   return LinearProgressIndicator(
-    backgroundColor: Colors.black26,
+    minHeight: 10.0,
+    backgroundColor: Colors.transparent,
     valueColor: const AlwaysStoppedAnimation<Color>(Colors.red),
     value: value,
   );
