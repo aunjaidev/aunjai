@@ -1,21 +1,25 @@
 import 'package:aunjai/constant/color_constant.dart';
 import 'package:aunjai/constant/style_constant.dart';
+import 'package:aunjai/model/mention_model.dart';
 import 'package:aunjai/utils/helper.dart';
 import 'package:aunjai/utils/widgets/get_rating_star.dart';
 import 'package:aunjai/utils/widgets/horizontal.dart';
+import 'package:aunjai/utils/widgets/mention_slide.dart';
 import 'package:aunjai/utils/widgets/progressbar.dart';
 import 'package:aunjai/utils/widgets/reviews/review_section.dart';
 import 'package:aunjai/utils/widgets/vertical.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class ReviewSection extends StatelessWidget {
   final GlobalKey reviewKey;
-  const ReviewSection({Key? key, required this.reviewKey}) : super(key: key);
+
+  ReviewSection({Key? key, required this.reviewKey, this.mentionList})
+      : super(key: key);
+  Map<String, MentionModel>? mentionList;
 
   @override
   Widget build(BuildContext context) {
-    return  Padding(
+    return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,10 +50,8 @@ class ReviewSection extends StatelessWidget {
                           const Vertical(5.0),
                           SizedBox(
                               width: 100,
-                              child: normalText(
-                                  "100000 Reviews",
-                                  align: TextAlign.center,
-                                  fontSize: 14))
+                              child: normalText("100000 Reviews",
+                                  align: TextAlign.center, fontSize: 14))
                         ],
                       ),
                       const Horizontal(10),
@@ -62,10 +64,9 @@ class ReviewSection extends StatelessWidget {
                             child: Row(
                               children: [
                                 Column(
-                                  crossAxisAlignment:
-                                  CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     normalText("Excellent"),
                                     normalText("VeryGood"),
@@ -77,9 +78,9 @@ class ReviewSection extends StatelessWidget {
                                 Expanded(
                                   child: Column(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.center,
+                                        CrossAxisAlignment.center,
                                     mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                        MainAxisAlignment.spaceAround,
                                     children: [
                                       getRatingProgressBar(0.12),
                                       getRatingProgressBar(0.55),
@@ -98,35 +99,8 @@ class ReviewSection extends StatelessWidget {
                   ),
                 ],
               ),
-              const Vertical(30.0),
-              normalText("Read Reviews That Mention:"),
-
-              Center(
-                child: Column(
-                  children: [
-                    const CircleAvatar(),
-                    normalText("ให้คะแนนสำหรับสถานที่นี้"),
-                    RatingBar.builder(
-                      initialRating: 0,
-                      minRating: 0,
-                      direction: Axis.horizontal,
-                      allowHalfRating: true,
-                      itemCount: 5,
-                      unratedColor: Colors.black12,
-                      glow: false,
-                      itemPadding:
-                      const EdgeInsets.symmetric(horizontal: 4.0),
-                      itemBuilder: (context, _) => const Icon(
-                        Icons.star,
-                        color: primary1,
-                      ),
-                      onRatingUpdate: (rating) {
-                        print(rating);
-                      },
-                    )
-                  ],
-                ),
-              ),
+              const Vertical(20.0),
+              MentionSlide(mentionList),
               const ReviewSectionWithMore()
             ],
           ),
@@ -134,6 +108,7 @@ class ReviewSection extends StatelessWidget {
       ),
     );
   }
+
 
   getRatingProgressBar(double percentage) {
     return Flexible(
@@ -145,5 +120,3 @@ class ReviewSection extends StatelessWidget {
     );
   }
 }
-
-

@@ -1,0 +1,70 @@
+import 'package:aunjai/constant/enum_constant.dart';
+import 'package:aunjai/model/mention_model.dart';
+
+Map<String, MentionModel> mentionsMock = {
+  "men001": MentionModel(
+      id: "men001",
+      type: FeatureTypes.attraction.name,
+      labelTh: "นวดแผนไทย",
+      labelEn: "thai massage"),
+  "men002": MentionModel(
+      id: "men002",
+      type: FeatureTypes.attraction.name,
+      labelTh: "วัด",
+      labelEn: "temple"),
+  "men003": MentionModel(
+      id: "men003",
+      type: FeatureTypes.attraction.name,
+      labelTh: "วัด",
+      labelEn: "wat"),
+  "men004": MentionModel(
+      id: "men004",
+      type: FeatureTypes.attraction.name,
+      labelTh: "วัฒนธรรม",
+      labelEn: "culture"),
+  "men005": MentionModel(
+      id: "men005",
+      type: FeatureTypes.attraction.name,
+      labelTh: "เสื้อผ้า",
+      labelEn: "clothes"),
+  "men006": MentionModel(
+      id: "men005",
+      type: FeatureTypes.attraction.name,
+      labelTh: "เสื้อผ้า",
+      labelEn: "clothes"),
+  "men007": MentionModel(
+      id: "men005",
+      type: FeatureTypes.attraction.name,
+      labelTh: "เสื้อผ้า",
+      labelEn: "clothes"),
+  "men008": MentionModel(
+      id: "men005",
+      type: FeatureTypes.attraction.name,
+      labelTh: "เสื้อผ้า",
+      labelEn: "clothes"),
+  "men009": MentionModel(
+      id: "men005",
+      type: FeatureTypes.attraction.name,
+      labelTh: "เสื้อผ้า",
+      labelEn: "clothes"),
+  "men010": MentionModel(
+      id: "men005",
+      type: FeatureTypes.attraction.name,
+      labelTh: "เสื้อผ้า",
+      labelEn: "clothes"),
+  "men011": MentionModel(
+      id: "men005",
+      type: FeatureTypes.attraction.name,
+      labelTh: "เสื้อผ้า",
+      labelEn: "clothes"),
+  "men012": MentionModel(
+      id: "men005",
+      type: FeatureTypes.attraction.name,
+      labelTh: "เสื้อผ้า",
+      labelEn: "clothes"),
+  "men013": MentionModel(
+      id: "men005",
+      type: FeatureTypes.attraction.name,
+      labelTh: "เสื้อผ้า",
+      labelEn: "clothes"),
+};

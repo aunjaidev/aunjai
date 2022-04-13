@@ -1,6 +1,7 @@
 import 'package:aunjai/constant/color_constant.dart';
 import 'package:aunjai/constant/style_constant.dart';
 import 'package:aunjai/core/map_utils.dart';
+import 'package:aunjai/mock/metions_mock.dart';
 import 'package:aunjai/utils/widgets/appbar.dart';
 import 'package:aunjai/utils/widgets/decoration.dart';
 import 'package:aunjai/utils/widgets/get_rating_star.dart';
@@ -38,24 +39,7 @@ class _AttractionPlaceScreenState extends State<AttractionPlaceScreen> {
     "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/c2/79/27/caption.jpg?w=1200&h=-1&s=1",
   ];
 
-  final List<String> mentions = [
-    "reclining buddha"
-        "grand palace",
-    "massage school",
-    "entrance fee",
-    "worth a visit",
-    "thai massage",
-    "temple",
-    "pearl",
-    "complex",
-    "coins",
-    "shoes",
-    "wat",
-    "baht",
-    "architecture",
-    "culture",
-    "clothes"
-  ];
+
 
   // Future<void> getAlbum() async {
   //   HttpClient client = HttpClient();
@@ -120,6 +104,11 @@ class _AttractionPlaceScreenState extends State<AttractionPlaceScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: null,
+      bottomNavigationBar: Container(
+        height: 60.0,
+        width: Helper.getScreenWidth(context),
+        color: Colors.red,
+      ),
       body: SizedBox(
         width: Helper.getScreenWidth(context),
         height: Helper.getScreenHeight(context),
@@ -243,7 +232,7 @@ class _AttractionPlaceScreenState extends State<AttractionPlaceScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   AboutSection(aboutKey: aboutKey),
-                  ReviewSection(reviewKey: reviewKey),
+                  ReviewSection(reviewKey: reviewKey,mentionList: mentionsMock),
                   MediaCarouselHorizontalWidget(
                     label: "บทความแนะนำ",
                   ),
@@ -259,30 +248,6 @@ class _AttractionPlaceScreenState extends State<AttractionPlaceScreen> {
     );
   }
 
-
-  List<Widget> getMentionWidgets() {
-    List<Widget> widgets = [];
-    for (var label in mentions) {
-      widgets.add(Container(
-        margin: const EdgeInsets.all(5.0),
-        height: 35,
-        padding: const EdgeInsets.symmetric(vertical: 2.5, horizontal: 10),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(100),
-          color: Colors.white,
-          boxShadow: [
-            const BoxShadow(color: Colors.grey, spreadRadius: 1.5),
-          ],
-        ),
-        child: Center(
-          child: InkWell(
-            child: normalText(label),
-          ),
-        ),
-      ));
-    }
-    return widgets;
-  }
 
   getActivitiesButton({required IconData icon, required String label}) {
     return Flexible(
